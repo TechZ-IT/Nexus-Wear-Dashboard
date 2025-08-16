@@ -29,6 +29,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import toast from "react-hot-toast"
 
 export function NavUser({
   user,
@@ -102,9 +103,9 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => toast.success('wow')}>
               <LogOut />
-              Log out
+              Log outs
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
