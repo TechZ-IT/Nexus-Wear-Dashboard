@@ -1,11 +1,54 @@
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
-const Home = () => {
+const SignIn = () => {
   return (
-    <div>
-      home
+    <div className="flex h-screen ">
+      {/* Left Side */}
+      <div className="w-1/2 relative flex items-center justify-center">
+        <div className="absolute inset-0 bg-[url('/loginBg1.jpg')] bg-cover" />
+        <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
+        <div className="relative z-10 flex flex-col items-center gap-4 text-white">
+          <img src="/mainLogo.png" alt="Logo" className="w-40" />
+          <h1 className="text-6xl font-extrabold text-black">NEXUS WEAR</h1>
+        </div>
+      </div>
+
+      {/* Right Side (form area) */}
+      <div className="w-1/2 flex items-center justify-center bg-gray-50">
+        <div className="w-[80%] max-w-[70vw] p-10 rounded  border border-gray-200 bg-white">
+          <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+            SIGN IN
+          </h2>
+          <form className="flex flex-col gap-4">
+            <input
+              type="email"
+              placeholder="Email"
+              className="p-3 border rounded-sm focus:outline-none focus:ring-2 focus:ring-black"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="p-3 border rounded-sm focus:outline-none focus:ring-2 focus:ring-black"
+            />
+            <button
+              type="submit"
+              className="bg-[#1d242d] text-white py-3 rounded-sm  transition-all duration-300"
+            >
+              Sign In
+            </button>
+          </form>
+
+          <div className="flex justify-center gap-2  mt-4 text-sm text-gray-500">
+            <span>Dont have an account?</span>
+            <Link href="" className="text-black font-medium hover:underline">
+              Sign Up
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Home;
+export default SignIn;
