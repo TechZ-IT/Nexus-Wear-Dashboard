@@ -30,6 +30,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import toast from "react-hot-toast"
+import { useAppDispatch } from "@/hooks/useRedux"
+import { logout } from "@/redux/features/authSlice"
 
 export function NavUser({
   user,
@@ -41,7 +43,10 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-
+  const dispatch = useAppDispatch()
+  const handleLogout = () => {
+    dispatch(logout())
+  }
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -103,7 +108,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => toast.success('wow')}>
+            <DropdownMenuItem onClick={() => handleLogout()}>
               <LogOut />
               Log outs
             </DropdownMenuItem>
