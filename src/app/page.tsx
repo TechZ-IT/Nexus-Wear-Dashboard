@@ -1,4 +1,5 @@
 'use client'
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { loadUser, loginUser } from "@/redux/features/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import Link from "next/link";
@@ -15,8 +16,8 @@ interface UserAuth {
 
 
 const SignIn = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const { user, loading, error } = useSelector((state: RootState) => state.auth)
+  const dispatch = useAppDispatch()
+  const { user, loading, error } = useAppSelector((state) => state.auth)
   console.log(user, loading, error);
 
   const { handleSubmit, register } = useForm<UserAuth>()
