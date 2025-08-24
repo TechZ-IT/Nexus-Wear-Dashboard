@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 
 interface AuthState {
@@ -39,7 +39,21 @@ export const loginUser = createAsyncThunk(
 const authSlice = createSlice({
     name: "auth",
     initialState,
-    reducers: {},
+    reducers: {
+        logout: (state) => {
+            state.user = null;
+            state.token = null;
+            localStorage.removeItem("auth");
+        },
+        loadUser: (state) => {
+            const saved = localStorage.getItem("auth");
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                state.user = parsed.data;
+                state.token = parsed.accessToken;
+            }
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(loginUser.pending, (state) => {
@@ -64,6 +78,6 @@ const authSlice = createSlice({
 
 
 
-export  default authSlice.reducer
+export default authSlice.reducer
 
 
