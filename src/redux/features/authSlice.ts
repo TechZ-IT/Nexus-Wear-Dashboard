@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
+import axios from "axios";
 
 interface AuthState {
-    user: string | null;
+    user: any | null;
     token: string | null;
     loading: boolean;
     error: string | null;
@@ -15,26 +15,24 @@ const initialState: AuthState = {
     error: null,
 };
 
-
-// Login thunk
-export const loginUser = createAsyncThunk(
-    "auth/loginUser",
-    async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
+// 🔹 Admin Login Thunk
+export const loginAdmin = createAsyncThunk(
+    "auth/loginAdmin",
+    async (
+        { email, password }: { email: string; password: string },
+        { rejectWithValue }
+    ) => {
         try {
-            const res = await axios.post("https://nexus-wear-backend-production.up.railway.app/customer/login", {
-                email,
-                password,
-            });
-            return res.data;
+            const res = await axios.post(
+                "https://nexus-wear-backend-production.up.railway.app/admin/login",
+                { email, password }
+            );
+            return res.data; // { data, accessToken, message, status }
         } catch (err) {
-            return rejectWithValue("Login failed");
+            return rejectWithValue("Admin login failed");
         }
     }
 );
-
-
-
-
 
 const authSlice = createSlice({
     name: "auth",
@@ -56,28 +54,22 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(loginUser.pending, (state) => {
+            .addCase(loginAdmin.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(loginUser.fulfilled, (state, action) => {
+            .addCase(loginAdmin.fulfilled, (state, action) => {
                 state.loading = false;
-                state.user = action.payload.data;
-                state.token = action.payload.accessToken;
+                state.user = action.payload.data; // Admin info
+                state.token = action.payload.accessToken; // JWT token
                 localStorage.setItem("auth", JSON.stringify(action.payload));
             })
-            .addCase(loginUser.rejected, (state, action) => {
+            .addCase(loginAdmin.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             });
     },
-})
+});
 
-
-
-export const {logout,loadUser} = authSlice.actions
-
-
-export default authSlice.reducer
-
-
+export const { logout, loadUser } = authSlice.actions;
+export default authSlice.reducer;
