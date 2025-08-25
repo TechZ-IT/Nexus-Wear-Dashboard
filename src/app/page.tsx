@@ -1,6 +1,6 @@
 'use client'
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { loadUser, loginUser } from "@/redux/features/authSlice";
+import { loadUser, loginAdmin } from "@/redux/features/authSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -33,7 +33,7 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<UserAuth> = async (data) => {
     try {
-      const res = await dispatch(loginUser(data)).unwrap();
+      const res = await dispatch(loginAdmin(data)).unwrap();
       toast.success("Login Successful 🎉");
       router.push("/dashboard");
     } catch (err: any) {
