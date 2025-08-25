@@ -1,13 +1,11 @@
 'use client'
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { loadUser, loginAdmin } from "@/redux/features/authSlice";
-import { AppDispatch, RootState } from "@/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
 
 interface UserAuth {
   email: string
