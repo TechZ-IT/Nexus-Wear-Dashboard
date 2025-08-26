@@ -1,8 +1,9 @@
+import { Admin } from "@/types/admin";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface AuthState {
-    user: any | null;
+    user: Admin | null;
     token: string | null;
     loading: boolean;
     error: string | null;
@@ -29,6 +30,7 @@ export const loginAdmin = createAsyncThunk(
             );
             return res.data; // { data, accessToken, message, status }
         } catch (err) {
+            console.log(err)
             return rejectWithValue("Admin login failed");
         }
     }
