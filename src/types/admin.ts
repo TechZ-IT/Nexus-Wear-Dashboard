@@ -1,6 +1,19 @@
-export type Admin = {
+interface Role {
+  id: number;
   name: string;
-  phone: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Admin {
+  id: number;
+  name: string;
   email: string;
-  image: string;
-};
+  phone: string;
+  image: string | null;
+  role: Role;
+  roleId: number;
+  createdAt: string;
+  updatedAt: string;
+}
