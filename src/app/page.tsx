@@ -31,11 +31,12 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<UserAuth> = async (data) => {
     try {
-      const res = await dispatch(loginAdmin(data)).unwrap();
+      await dispatch(loginAdmin(data)).unwrap();
       toast.success("Login Successful 🎉");
       router.push("/dashboard");
-    } catch (err: any) {
-      toast.error(err || "Login failed ");
+    } catch (err) {
+      console.error(err)
+      toast.error("Login failed ");
     }
   };
 

@@ -29,7 +29,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import toast from "react-hot-toast"
 import { useAppDispatch } from "@/hooks/useRedux"
 import { logout } from "@/redux/features/authSlice"
 
