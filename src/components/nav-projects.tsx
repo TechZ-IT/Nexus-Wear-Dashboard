@@ -13,18 +13,12 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { NavProjectsProps } from "@/types/navProjectsProps"
 
-export function NavProjects({
-  title,
-  items,
-}: {
-  title: string
-  items: {
-    name: string
-    url: string
-    icon: LucideIcon
-  }[]
-}) {
+
+
+
+export function NavProjects({title,items}:NavProjectsProps) {
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>{title}</SidebarGroupLabel>
