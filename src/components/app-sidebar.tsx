@@ -2,16 +2,8 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  ShoppingCart, Package, Users, CreditCard, Folder, Layers, Palette, Ruler, Square, Bell, Mail, Newspaper, HelpCircle, Settings, UserCog, Shield, Image, Share2
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -39,111 +31,41 @@ const data = {
       plan: "Enterprise",
     },
   ],
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
+  ecommerce: [
+    { name: "Products", url: "#", icon: Package },
+    { name: "Orders", url: "#", icon: ShoppingCart },
+    { name: "Customers", url: "#", icon: Users },
+    { name: "Payments", url: "#", icon: CreditCard },
   ],
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
+  catalog: [
+    { name: "Categories", url: "#", icon: Folder },
+    { name: "Subcategories", url: "#", icon: Layers },
+    { name: "Colors", url: "#", icon: Palette },
+    { name: "Sizes", url: "#", icon: Ruler },
+    { name: "Fabrics", url: "#", icon: Square },
+    { name: "Materials", url: "#", icon: Square },
+  ],
+  marketing: [
+    { name: "Subscribers", url: "#", icon: Mail },
+    { name: "Notifications", url: "#", icon: Bell },
+    { name: "Banners", url: "#", icon: Image },
+    { name: "Social Links", url: "#", icon: Share2 },
+  ],
+  support: [
+    { name: "FAQ", url: "#", icon: HelpCircle },
+    { name: "Contacts", url: "#", icon: Mail },
+  ],
+  userManagement: [
+    { name: "Users", url: "#", icon: Users },
+    { name: "Admins", url: "#", icon: UserCog },
+    { name: "Roles & Permissions", url: "#", icon: Shield },
+  ],
+  settings: [
+    { name: "General Settings", url: "#", icon: Settings },
+    { name: "System Preferences", url: "#", icon: Settings },
   ],
 }
+
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -153,14 +75,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavProjects title="Ecommerce" items={data.ecommerce} />
+        <NavProjects title="Catalog" items={data.catalog} />
+        <NavProjects title="Marketing" items={data.marketing} />
+        <NavProjects title="Support" items={data.support} />
+        <NavProjects title="User Management" items={data.userManagement} />
+        <NavProjects title="Settings" items={data.settings} />
       </SidebarContent>
+
 
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
-      
+
       {/* <SidebarRail /> */}
     </Sidebar>
   )
