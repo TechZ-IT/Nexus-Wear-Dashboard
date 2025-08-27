@@ -17,3 +17,5 @@ export interface Admin {
   createdAt: string;
   updatedAt: string;
 }
+
+

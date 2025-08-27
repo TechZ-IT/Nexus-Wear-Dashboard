@@ -109,7 +109,7 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => handleLogout()}>
               <LogOut />
-              Log outs
+              Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
