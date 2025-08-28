@@ -120,3 +120,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+/* custom sidebar  */
+
+/* For Chrome, Edge, Safari, Brave, Opera */
+::-webkit-scrollbar {
+  width: 16px;              /* Full custom width */
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5f5;       /* Track background */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* Thumb color */
+  border-radius: 8px;        /* Rounded edges */
+  border: 3px solid #f5f5f5; /* Space around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #1f2937; /* Darker on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;                /* can be auto | thin | none */
+  scrollbar-color: #6a7282 #f5f5f5;     /* thumb color | track color */
+}
