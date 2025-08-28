@@ -1,40 +1,44 @@
 "use client"
 
-import {
-  type LucideIcon,
-} from "lucide-react"
-
-
+import { usePathname } from "next/navigation"
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from "@/components/ui/sidebar"
 import { NavProjectsProps } from "@/types/navProjectsProps"
+import Link from "next/link"
 
+export function NavProjects({ title, items }: NavProjectsProps) {
+  const pathname = usePathname()
 
-
-
-export function NavProjects({title,items}:NavProjectsProps) {
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>{title}</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
-              <a href={item.url}>
-                <item.icon />
-                <span>{item.name}</span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        ))}
+        {items.map((item) => {
+          const isActive = pathname === item.url
+
+          return (
+            <SidebarMenuItem key={item.name}>
+              <SidebarMenuButton asChild isActive={isActive}>
+                <Link
+                  href={item.url}
+                  className={`flex items-center gap-2 rounded-lg px-2 py-1 transition-colors ${isActive
+                      ? "bg-primary text-white"
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    }`}
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.name}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )
+        })}
       </SidebarMenu>
     </SidebarGroup>
   )
 }
-

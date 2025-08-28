@@ -32,9 +32,9 @@ const data = {
     },
   ],
   ecommerce: [
-    { name: "Products", url: "#", icon: Package },
-    { name: "Orders", url: "#", icon: ShoppingCart },
-    { name: "Customers", url: "#", icon: Users },
+    { name: "Products", url: "/dashboard/products", icon: Package },
+    { name: "Orders", url: "/dashboard/orders", icon: ShoppingCart },
+    { name: "Customers", url: "/dashboard/customers", icon: Users },
     { name: "Payments", url: "#", icon: CreditCard },
   ],
   catalog: [
