@@ -26,9 +26,9 @@ export function NavProjects({ title, items }: NavProjectsProps) {
               <SidebarMenuButton asChild isActive={isActive}>
                 <Link
                   href={item.url}
-                  className={`flex items-center gap-2 rounded-lg px-2 py-1 transition-colors ${isActive
-                      ? "bg-primary text-white"
-                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  className={`flex items-center gap-2  px-2 py-1 transition-colors ${isActive
+                      ? "bg-primary text-white  border-l-4 border-gray-500 "
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground "
                     }`}
                 >
                   <item.icon className="h-4 w-4" />
