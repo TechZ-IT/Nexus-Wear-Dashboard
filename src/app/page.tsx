@@ -1,97 +1,16 @@
 'use client'
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { loadUser, loginAdmin } from "@/redux/features/authSlice";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
-import { SubmitHandler, useForm } from 'react-hook-form'
-import toast from "react-hot-toast";
-
-interface UserAuth {
-  email: string
-  password: string
-}
-
-
-const SignIn = () => {
-  const dispatch = useAppDispatch()
-  const { user, loading, error } = useAppSelector((state) => state.auth)
-  console.log(user, loading, error);
-
-  const { handleSubmit, register } = useForm<UserAuth>()
-
-  const router = useRouter()
-
-
-  useEffect(() => {
-    dispatch(loadUser());
-  }, [dispatch]);
 
 
 
-  const onSubmit: SubmitHandler<UserAuth> = async (data) => {
-    try {
-      await dispatch(loginAdmin(data)).unwrap();
-      toast.success("Login Successful 🎉");
-      router.push("/dashboard");
-    } catch (err) {
-      console.error(err)
-      toast.error("Login failed ");
-    }
-  };
-
+const Home = () => {
 
 
 
   return (
-    <div className="flex h-screen ">
-      {/* Left Side */}
-      <div className="w-1/2 relative flex items-center justify-center">
-        <div className="absolute inset-0 bg-[url('/loginBg1.jpg')] bg-cover" />
-        <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
-        <div className="relative z-10 flex flex-col items-center gap-4 text-white">
-          <img src="/mainLogo.png" alt="Logo" className="w-40" />
-          <h1 className="text-6xl font-extrabold text-black">NEXUS WEAR</h1>
-        </div>
-      </div>
-
-      {/* Right Side (form area) */}
-      <div className="w-1/2 flex items-center justify-center bg-gray-50">
-        <div className="w-[80%] max-w-[70vw] p-10 rounded  border border-gray-200 bg-white">
-          <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-            SIGN IN
-          </h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-            <input
-              {...register("email")}
-              type="email"
-              placeholder="Email"
-              className="p-3 border rounded-sm focus:outline-none focus:ring-2 focus:ring-black"
-            />
-            <input
-              {...register("password")}
-              type="password"
-              placeholder="Password"
-              className="p-3 border rounded-sm focus:outline-none focus:ring-2 focus:ring-black"
-            />
-            <button
-              type="submit"
-              className="bg-[#1d242d] text-white py-3 rounded-sm  transition-all duration-300"
-            >
-              Sign In
-            </button>
-          </form>
-
-          <div className="flex justify-center gap-2  mt-4 text-sm text-gray-500">
-            <span>Dont have an account?</span>
-            <Link href="" className="text-black font-medium hover:underline">
-              Sign Up
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div className=" p-2">
+      dashboard Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore asperiores sit, a sed vel laborum alias quam cum iure, minima error! Repudiandae minima expedita dignissimos tempore, possimus rerum consectetur necessitatibus corrupti inventore fugiat tenetur dolore, commodi iusto quibusdam quidem placeat, dolorum eveniet consequuntur? Accusantium praesentium amet consequatur iure excepturi quasi molestias suscipit nemo, laudantium, sapiente quos. Laudantium culpa tempora dolorum. Repudiandae, magnam minus, est sunt, quos nemo quidem quam vel et omnis numquam. Vero dicta quisquam enim voluptatem quasi. Quas tenetur nisi magni vitae, saepe explicabo ex et. Perspiciatis obcaecati tempora impedit id ipsum, distinctio quasi ab, nihil est doloremque amet ex error ipsa, debitis placeat qui minus perferendis. Aliquid illo dolores placeat, sapiente itaque totam deleniti inventore ab animi explicabo nulla corrupti unde asperiores exercitationem, non ipsam eius tenetur debitis nesciunt sunt beatae molestias consectetur! Amet deserunt mollitia recusandae nobis! Rerum, quia temporibus amet debitis consequatur aspernatur mollitia tempora corrupti impedit nesciunt odit accusamus harum corporis iure praesentium quas assumenda architecto, soluta in at doloribus provident! Quod itaque corrupti exercitationem molestias eum minus impedit ex nobis ab fugiat. Deleniti repudiandae qui veniam consequuntur cupiditate rerum suscipit ex odit numquam quis voluptatibus voluptatem minima optio reprehenderit pariatur eveniet, est natus! Minus adipisci quis et delectus autem exercitationem labore quos consequatur voluptatibus vel officia voluptas in quaerat fuga, eum blanditiis dolorum laudantium dicta excepturi eligendi provident, laboriosam, mollitia atque voluptatem. Maxime saepe, alias, nam doloribus repudiandae nisi commodi obcaecati architecto veritatis totam voluptate consequatur reiciendis sunt, error culpa ipsam iusto adipisci quia fugiat suscipit ut fugit. A quod, repellendus inventore optio omnis facilis nemo aliquam! Reiciendis tempora commodi in enim architecto inventore voluptatem eveniet iusto, cumque magnam iure dolor libero dolorem debitis nostrum repudiandae explicabo dolores quaerat possimus repellat minus. Quas officiis libero consequatur asperiores laboriosam ea aliquam magnam eius voluptas, eos in voluptatum saepe sunt iusto porro at, vel iste tempora dolorem. Quasi, aliquam consectetur. Ullam cum eaque natus officiis, cupiditate quae totam explicabo quia porro. Enim voluptates tenetur cupiditate porro saepe itaque inventore at corrupti corporis, mollitia sunt aliquam architecto eos minima laudantium adipisci alias eveniet odio facilis a dolore voluptatum aliquid! Odit ut maiores facilis architecto voluptate sed laborum in laboriosam accusantium delectus quidem aliquam, voluptatum fugiat eaque magni. Repellat voluptatibus vero non officiis delectus ab, doloremque, ullam perferendis earum, nisi in dolorum possimus. Hic temporibus praesentium quasi nostrum omnis ea rem, deleniti dolores error consectetur earum quis molestiae delectus nemo vero beatae sapiente veritatis accusantium? Rem veritatis, illo sunt amet quasi necessitatibus dolorem, itaque illum ipsum atque quidem? Dicta vero esse dolore reprehenderit illum laboriosam nulla, veritatis doloremque quam nostrum, temporibus blanditiis recusandae. Obcaecati cupiditate asperiores deserunt suscipit possimus in, repellendus ut quia et est doloremque rem deleniti, exercitationem magni provident tempore ex consequuntur expedita! Impedit fuga consectetur reprehenderit optio harum culpa accusantium. Amet ipsam animi dolorum. Itaque, voluptates quo doloribus porro, non vel dolorum asperiores neque sint perspiciatis dicta! Minima cumque quo corrupti exercitationem, ab ut, harum, eius expedita vel adipisci vero tenetur. Quae reprehenderit eos esse. Natus, saepe maxime! Perspiciatis quo tempore illo blanditiis! Mollitia, corporis quo debitis commodi quae saepe fugiat vero sapiente ipsa, ipsam dolores. Commodi libero nesciunt ex ea optio voluptatum aspernatur sapiente reiciendis quod alias, accusamus nobis suscipit veniam qui eaque! Veritatis officiis repellendus numquam repellat voluptatem neque doloremque ratione eum perspiciatis harum eligendi possimus reiciendis assumenda modi, aut a incidunt animi aspernatur perferendis iusto tempore odio consequuntur dolorum? Voluptas a doloremque aliquid eius, veniam eaque id maxime, voluptates vel illum amet sequi cumque veritatis beatae, nihil sint reprehenderit repellendus. Eveniet, magni. Corporis odio repellendus quasi minus corrupti maxime illum laborum, quaerat, ullam distinctio dolore quisquam dicta eveniet. Corrupti, quae obcaecati. Rem reprehenderit obcaecati accusamus consequuntur doloribus dicta facere modi magnam explicabo voluptatum repellendus illo totam eligendi quis nemo, atque dolore? Qui alias animi nostrum praesentium quos, totam autem mollitia, odio ex modi, cupiditate consectetur quae. Adipisci veniam quasi voluptatem hic explicabo mollitia optio quidem voluptatum, officia delectus aut natus. Quia quisquam iste, hic eveniet pariatur eaque incidunt quidem obcaecati voluptates consectetur dolore voluptatum voluptate, odio nemo quibusdam accusamus dignissimos quo sequi voluptatem et soluta autem, ad esse praesentium! Ad maiores aliquam nam, repellat amet rerum aspernatur eius optio aliquid atque provident fuga, qui distinctio perspiciatis nisi adipisci delectus quod vitae alias aut. Sunt praesentium iusto ad modi voluptatem deserunt, harum repellat libero ipsam accusantium corrupti voluptas officiis eaque neque aut ducimus corporis culpa esse, consequatur voluptate. At sit illo deserunt asperiores alias illum, sunt omnis similique nisi laborum libero quo amet molestiae odio iste error sed itaque qui veritatis. Ratione ab dolore, a iure, earum dignissimos velit veniam dolorem eos excepturi porro hic autem animi, consequuntur eaque repellendus inventore assumenda nesciunt ex obcaecati perspiciatis perferendis. Dignissimos possimus, enim deserunt error aliquam officia odio, tempore eaque cum totam temporibus. Et amet magni accusamus illum illo laboriosam necessitatibus sed dolor? Debitis iusto odio accusantium. Quas eaque autem voluptatibus fugiat nobis voluptatem error velit ratione dolor quo, delectus explicabo voluptas officiis! Atque aperiam ipsa, sequi rem ex corporis quia non facere illum voluptates doloremque dolores, optio id maxime nulla. Ab architecto maiores voluptate, dolore ratione earum necessitatibus aliquam ipsa, unde, veniam dignissimos omnis consequatur distinctio. Reprehenderit voluptates dicta obcaecati perspiciatis dolor tempora totam dolorum, deleniti id suscipit quae architecto sed vitae iure facilis quod aspernatur itaque distinctio aliquam sint eius harum non! Odit eveniet aperiam consequatur vitae quidem doloribus expedita. Provident delectus quos voluptate quibusdam, atque illo rem ducimus quas accusantium laboriosam ratione obcaecati exercitationem nihil reiciendis quisquam deleniti rerum consectetur. Consectetur ab cumque amet illum voluptas eius dicta veritatis qui totam delectus libero similique cum quod doloremque consequatur blanditiis error aut iusto quidem culpa, quibusdam unde. Quis odio nemo quo consequatur voluptatibus minus unde autem quidem, commodi illum ab itaque. Facilis perferendis praesentium voluptatum quibusdam suscipit quaerat maiores sunt cumque, similique deserunt, autem minus! Ducimus numquam odit alias ipsa, minima quae pariatur sequi, repellat accusantium dolore culpa! Reprehenderit porro veritatis repellat aliquam sit dignissimos ipsam aut rem, amet vero officiis expedita voluptatem!
     </div>
   );
 };
 
-export default SignIn;
+export default Home;

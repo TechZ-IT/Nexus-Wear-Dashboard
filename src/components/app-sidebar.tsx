@@ -3,7 +3,9 @@
 import * as React from "react"
 import {
   GalleryVerticalEnd,
-  ShoppingCart, Package, Users, CreditCard, Folder, Layers, Palette, Ruler, Square, Bell, Mail, Newspaper, HelpCircle, Settings, UserCog, Shield, Image, Share2
+  ShoppingCart, Package, Users, CreditCard, Folder, Layers, Palette, Ruler, Square, Bell, Mail, Newspaper, HelpCircle, Settings, UserCog, Shield, Image, Share2,
+  Home,
+  PlusCircle
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -31,38 +33,44 @@ const data = {
       plan: "Enterprise",
     },
   ],
+  main: [
+    { name: "Dashboard", url: "/", icon: Home },
+  ],
   ecommerce: [
-    { name: "Products", url: "/dashboard/products", icon: Package },
-    { name: "Orders", url: "/dashboard/orders", icon: ShoppingCart },
-    { name: "Customers", url: "/dashboard/customers", icon: Users },
-    { name: "Payments", url: "#", icon: CreditCard },
+    { name: "Products", url: "/products", icon: Package },
+    { name: "Add Product", url: "/products/create", icon: PlusCircle },
+    { name: "Orders", url: "/orders", icon: ShoppingCart },
+    { name: "Customers", url: "/customers", icon: Users },
+    { name: "Payments", url: "/payments", icon: CreditCard },
   ],
   catalog: [
-    { name: "Categories", url: "#", icon: Folder },
-    { name: "Subcategories", url: "#", icon: Layers },
-    { name: "Colors", url: "#", icon: Palette },
-    { name: "Sizes", url: "#", icon: Ruler },
-    { name: "Fabrics", url: "#", icon: Square },
-    { name: "Materials", url: "#", icon: Square },
+    { name: "Categories", url: "/categories", icon: Folder },
+    { name: "Add Category", url: "/categories/create", icon: PlusCircle },
+    { name: "Subcategories", url: "/subcategories", icon: Layers },
+    { name: "Add Subcategory", url: "/subcategories/create", icon: PlusCircle },
+    { name: "Colors", url: "/colors", icon: Palette },
+    { name: "Sizes", url: "/sizes", icon: Ruler },
+    { name: "Fabrics", url: "/fabrics", icon: Square },
+    { name: "Materials", url: "/materials", icon: Square },
   ],
   marketing: [
-    { name: "Subscribers", url: "#", icon: Mail },
-    { name: "Notifications", url: "#", icon: Bell },
-    { name: "Banners", url: "#", icon: Image },
-    { name: "Social Links", url: "#", icon: Share2 },
+    { name: "Subscribers", url: "/subscribers", icon: Mail },
+    { name: "Notifications", url: "/notifications", icon: Bell },
+    { name: "Banners", url: "/banners", icon: Image },
+    { name: "Social Links", url: "/social-links", icon: Share2 },
   ],
   support: [
-    { name: "FAQ", url: "#", icon: HelpCircle },
-    { name: "Contacts", url: "#", icon: Mail },
+    { name: "FAQ", url: "/faq", icon: HelpCircle },
+    { name: "Contacts", url: "/contacts", icon: Mail },
   ],
   userManagement: [
-    { name: "Users", url: "#", icon: Users },
-    { name: "Admins", url: "#", icon: UserCog },
-    { name: "Roles & Permissions", url: "#", icon: Shield },
+    { name: "Users", url: "/users", icon: Users },
+    { name: "Admins", url: "/admins", icon: UserCog },
+    { name: "Roles & Permissions", url: "/roles", icon: Shield },
   ],
   settings: [
-    { name: "General Settings", url: "#", icon: Settings },
-    { name: "System Preferences", url: "#", icon: Settings },
+    { name: "General Settings", url: "/settings/general", icon: Settings },
+    { name: "System Preferences", url: "/settings/system", icon: Settings },
   ],
 }
 
@@ -75,6 +83,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       <SidebarContent>
+        <NavProjects title="Main" items={data.main} />
         <NavProjects title="Ecommerce" items={data.ecommerce} />
         <NavProjects title="Catalog" items={data.catalog} />
         <NavProjects title="Marketing" items={data.marketing} />

@@ -1,22 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { Toaster } from "react-hot-toast";
-import ReduxProvider from "@/redux/provider";
 import { Inter, Roboto } from "next/font/google";
-
+import "./globals.css";
+import ClientLayout from './client-layout';
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({ weight: ["400", "700"], subsets: ["latin"] });
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,21 +13,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} ${roboto.className} antialiased`}
-      >
-        <ReduxProvider>
-          <Toaster
-            position="bottom-right"
-            reverseOrder={false}
-          />
-          {children}
-        </ReduxProvider>
+      <body className={`${inter.className} ${roboto.className} antialiased`}>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
