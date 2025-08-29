@@ -5,7 +5,7 @@ import type { RootState } from "../store";
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://nexus-wear-backend-production.up.railway.app/",
+        baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
 
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.token;
