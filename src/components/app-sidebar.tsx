@@ -24,7 +24,7 @@ const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: "/avatars",
   },
   teams: [
     {
@@ -65,7 +65,7 @@ const data = {
   ],
   userManagement: [
     { name: "Users", url: "/users", icon: Users },
-    { name: "Admins", url: "/admins", icon: UserCog },
+    { name: "Admins", url: "/allAdmins", icon: UserCog },
     { name: "Roles & Permissions", url: "/roles", icon: Shield },
   ],
   settings: [

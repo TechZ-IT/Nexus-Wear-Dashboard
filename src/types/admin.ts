@@ -1,4 +1,4 @@
-interface Role {
+export type Role = {
   id: number;
   name: string;
   description: string;
@@ -6,7 +6,7 @@ interface Role {
   updatedAt: string;
 }
 
-export interface Admin {
+export type Admin = {
   id: number;
   name: string;
   email: string;
