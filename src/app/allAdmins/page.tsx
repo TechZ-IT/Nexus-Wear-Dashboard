@@ -1,12 +1,18 @@
 "use client";
 
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { useGetAdminsQuery } from "@/redux/api/adminApi/adminApi";
+import { loadUser } from "@/redux/features/authSlice";
 import { AllAdmins } from "@/types/allAdmin";
+import { useEffect } from "react";
 
 export default function AdminList() {
     const { data, error, isLoading } = useGetAdminsQuery();
     console.log(data);
     const admins: AllAdmins[] = data?.data || [];
+
+   
+
 
     if (isLoading) return <p>Loading...</p>;
     if (error) return <p>Error loading admins</p>;
@@ -36,8 +42,8 @@ export default function AdminList() {
                             <td className="border px-4 py-2">{user?.role?.name}</td>
                             <td
                                 className={`border px-4 py-2 ${user?.status === "active"
-                                        ? "text-green-600 font-semibold"
-                                        : "text-red-400 font-semibold"
+                                    ? "text-green-600 font-semibold"
+                                    : "text-red-400 font-semibold"
                                     }`}
                             >
                                 {user?.status}
