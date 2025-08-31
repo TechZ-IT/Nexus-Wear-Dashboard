@@ -1,5 +1,6 @@
 "use client";
 
+import { DataTable } from "@/components/data-table";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { useGetAdminsQuery } from "@/redux/api/adminApi/adminApi";
 import { loadUser } from "@/redux/features/authSlice";
@@ -11,7 +12,7 @@ export default function AdminList() {
     console.log(data);
     const admins: AllAdmins[] = data?.data || [];
 
-   
+
 
 
     if (isLoading) return <p>Loading...</p>;
@@ -20,6 +21,7 @@ export default function AdminList() {
     return (
         <div className="p-6 font-bold">
             <h1 className="text-xl font-bold mb-4">Users</h1>
+            <DataTable data={admins} />
             <table className="min-w-full border-2  rounded shadow overflow-hidden">
                 <thead className="bg-gray-100 ">
                     <tr>
