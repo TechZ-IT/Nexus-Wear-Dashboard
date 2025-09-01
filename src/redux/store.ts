@@ -20,8 +20,8 @@ const persistedAuthReducer = persistReducer(persistConfig,authReducer)
 
 export const store = configureStore({
     reducer: {
-        auth: persistedAuthReducer,               // ✅ persisted reducer
-        [apiSlice.reducerPath]: apiSlice.reducer, // RTK Query
+        auth: persistedAuthReducer,               
+        [apiSlice.reducerPath]: apiSlice.reducer, 
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
