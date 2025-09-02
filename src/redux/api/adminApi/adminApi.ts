@@ -1,11 +1,12 @@
+import { AllAdmins } from "@/types/allAdmin";
 import { apiSlice } from "../apiSlice";
 
 export const adminApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getAdmins: builder.query<any, { page: number; limit: number }>({
+        getAdmins: builder.query<AllAdmins, { page: number; limit: number }>({
             query: ({ page, limit }) => `/admin?page=${page}&limit=${limit}`,
         }),
-        deleteAdmin: builder.mutation<any, string>({
+        deleteAdmin: builder.mutation({
             query: (adminId) => ({
                 url: `/admin/${adminId}`,
                 method: "DELETE",
@@ -14,4 +15,4 @@ export const adminApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetAdminsQuery,useDeleteAdminMutation } = adminApi;
+export const { useGetAdminsQuery, useDeleteAdminMutation } = adminApi;
