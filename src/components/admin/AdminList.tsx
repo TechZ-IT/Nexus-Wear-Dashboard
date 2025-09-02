@@ -41,6 +41,7 @@ import {
      AlertDialogHeader,
      AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { Admin } from "@/types/admin"
 
 export default function AdminTable() {
      const [currentPage, setCurrentPage] = useState(1)
@@ -57,7 +58,7 @@ export default function AdminTable() {
 
      const [deleteAdmin, { isLoading: isDeleting }] = useDeleteAdminMutation()
 
-     const admins: AllAdmins[] = data?.data || []
+     const admins: Admin[] = data?.data || []
      const total = data?.total || 0
      const totalPages = Math.ceil(total / itemsPerPage)
 
@@ -74,6 +75,7 @@ export default function AdminTable() {
 
           return matchesSearch && matchesStatus
      })
+     console.log(filteredAdmins);
 
      const openDialog = (id: string) => {
           setSelectedAdminId(id)

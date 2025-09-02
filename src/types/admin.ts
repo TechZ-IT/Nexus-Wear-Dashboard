@@ -7,7 +7,7 @@ export type Role = {
 }
 
 export type Admin = {
-  id: number;
+  id: string;
   name: string;
   email: string;
   phone: string;
@@ -16,6 +16,7 @@ export type Admin = {
   roleId: number;
   createdAt: string;
   updatedAt: string;
+  status:string
 }
 
 
