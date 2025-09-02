@@ -202,7 +202,6 @@ export default function AdminTable() {
                 </div>
             </div>
 
-            {/* ShadCN Pagination Component */}
 
         </div>
     )

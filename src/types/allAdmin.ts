@@ -2,7 +2,7 @@ import { Role } from "./admin";
 
 
 export type AllAdmins = {
-    id: number;
+    id: string;
     name: string;
     email: string;
     phone: string;
@@ -14,5 +14,5 @@ export type AllAdmins = {
     updatedAt: string;
     deletedAt: string | null;
     image: string | null;
-    roleId: number;
+    roleId: string;
 };
