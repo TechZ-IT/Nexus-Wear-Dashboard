@@ -65,7 +65,7 @@ const data = {
   ],
   userManagement: [
     { name: "Users", url: "/users", icon: Users },
-    { name: "Admins", url: "/allAdmins", icon: UserCog },
+    { name: "Admins", url: "/admin", icon: UserCog },
     { name: "Roles & Permissions", url: "/roles", icon: Shield },
   ],
   settings: [
