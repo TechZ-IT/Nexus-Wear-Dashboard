@@ -96,7 +96,7 @@ export default function AdminTable() {
 
      return (
           <div className="w-full p-6">
-               <h1 className="text-2xl font-bold mb-6">Admin Users</h1>
+               <h1 className="text-2xl font-bold mb-6">Admins</h1>
 
                {/* Search + Filter + Add */}
                <div className="flex justify-between items-center mb-4">
