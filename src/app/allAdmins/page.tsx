@@ -35,6 +35,7 @@ export default function AdminTable() {
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [searchTerm, setSearchTerm] = useState("")
+    const [statusFilter, setStatusFilter] = useState("all") // NEW
 
     // API Call with pagination
     const { data, error, isLoading } = useGetAdminsQuery({
@@ -46,14 +47,19 @@ export default function AdminTable() {
     const total = data?.total || 0
     const totalPages = Math.ceil(total / itemsPerPage)
 
-    // Filter (client-side)
-    const filteredAdmins = admins.filter(
-        (admin) =>
+    // Filter (client-side: search + status)
+    const filteredAdmins = admins.filter((admin) => {
+        const matchesSearch =
             admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             admin.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
             admin.phone.includes(searchTerm) ||
             admin.role.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+
+        const matchesStatus =
+            statusFilter === "all" ? true : admin.status === statusFilter
+
+        return matchesSearch && matchesStatus
+    })
 
     return (
         <div className="w-full p-6">
@@ -67,7 +73,22 @@ export default function AdminTable() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="max-w-sm"
                 />
-                <Button onClick={() => alert("Add Admin")}>Add Admin</Button>
+                <div className="flex gap-3 items-center">
+                    <div>
+                        <select
+                            value={statusFilter}
+                            onChange={(e) => setStatusFilter(e.target.value)}
+                            className="border p-[6px] rounded"
+                        >
+                            <option value="all">All</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="pending">Pending</option>
+                            <option value="deleted">Deleted</option>
+                        </select>
+                    </div>
+                    <Button onClick={() => alert("Add Admin")}>Add Admin</Button>
+                </div>
             </div>
 
             {/* Table */}
@@ -104,8 +125,8 @@ export default function AdminTable() {
                                     <TableCell>
                                         <span
                                             className={`px-2 py-1 text-xs font-semibold rounded-full ${admin.status === "active"
-                                                ? "bg-green-100 text-green-800"
-                                                : "bg-red-100 text-red-800"
+                                                    ? "bg-green-100 text-green-800"
+                                                    : "bg-red-100 text-red-800"
                                                 }`}
                                         >
                                             {admin.status}
@@ -166,21 +187,25 @@ export default function AdminTable() {
                                 <PaginationPrevious
                                     href="#"
                                     onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                                    className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                                    className={
+                                        currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                                    }
                                 />
                             </PaginationItem>
 
-                            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                                <PaginationItem key={page}>
-                                    <PaginationLink
-                                        href="#"
-                                        isActive={currentPage === page}
-                                        onClick={() => setCurrentPage(page)}
-                                    >
-                                        {page}
-                                    </PaginationLink>
-                                </PaginationItem>
-                            ))}
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                                (page) => (
+                                    <PaginationItem key={page}>
+                                        <PaginationLink
+                                            href="#"
+                                            isActive={currentPage === page}
+                                            onClick={() => setCurrentPage(page)}
+                                        >
+                                            {page}
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                )
+                            )}
 
                             {totalPages > 5 && <PaginationEllipsis />}
 
@@ -201,10 +226,6 @@ export default function AdminTable() {
                     </Pagination>
                 </div>
             </div>
-
-
         </div>
     )
 }
-
-
