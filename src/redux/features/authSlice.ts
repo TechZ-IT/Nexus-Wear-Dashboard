@@ -28,7 +28,8 @@ export const loginAdmin = createAsyncThunk(
                 "https://nexus-wear-backend-production.up.railway.app/admin/login",
                 { email, password }
             );
-            return res.data; // { data, accessToken, message, status }
+            console.log(res.data);
+            return res.data; 
         } catch (err) {
             console.log(err)
             return rejectWithValue("Admin login failed");
