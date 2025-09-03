@@ -7,7 +7,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
 
-export default function ClientLayout({ children }: { children: ReactNode }) {
+export default function AdminLayout({ children }: { children: ReactNode }) {
     const pathname = usePathname();
 
     const hideSidebar = pathname === "/signin";
