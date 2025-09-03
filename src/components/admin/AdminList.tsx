@@ -13,13 +13,7 @@ import {
      TableHeader,
      TableRow,
 } from "@/components/ui/table"
-import {
-     DropdownMenu,
-     DropdownMenuTrigger,
-     DropdownMenuContent,
-     DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
-import { MoreHorizontal } from "lucide-react"
+import { Pencil, Trash, Eye } from "lucide-react"
 import {
      Pagination,
      PaginationContent,
@@ -41,14 +35,13 @@ import {
      AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Admin } from "@/types/admin"
+import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
 
 export default function AdminTable() {
      const [currentPage, setCurrentPage] = useState(1)
      const [itemsPerPage, setItemsPerPage] = useState(10)
      const [searchTerm, setSearchTerm] = useState('')
      const [statusFilter, setStatusFilter] = useState("all")
-     const [dialogOpen, setDialogOpen] = useState(false)
-     const [selectedAdminId, setSelectedAdminId] = useState<string | null>(null)
 
      const { data, isLoading, refetch } = useGetAdminsQuery({
           page: currentPage,
@@ -76,21 +69,16 @@ export default function AdminTable() {
      })
      console.log(filteredAdmins);
 
-     const openDialog = (id: string) => {
-          setSelectedAdminId(id)
-          setDialogOpen(true)
-     }
 
-     const confirmDelete = async () => {
-          if (selectedAdminId) {
+     const handleDelete = async (id: string) => {
+          if (id) {
                try {
-                    await deleteAdmin(selectedAdminId).unwrap()
+                    await deleteAdmin(id).unwrap()
                     await refetch()
                } catch (error) {
                     console.error("Delete failed", error)
                }
           }
-          setDialogOpen(false)
      }
 
      return (
@@ -160,24 +148,39 @@ export default function AdminTable() {
                                                        {admin.status}
                                                   </span>
                                              </TableCell>
+                                             {/* actions */}
                                              <TableCell>
-                                                  <DropdownMenu>
-                                                       <DropdownMenuTrigger asChild>
-                                                            <Button variant="ghost" className="h-8 w-8 p-0">
-                                                                 <MoreHorizontal />
-                                                            </Button>
-                                                       </DropdownMenuTrigger>
-                                                       <DropdownMenuContent align="end">
-                                                            <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                            <DropdownMenuItem
-                                                                 onClick={() => openDialog(admin.id)}
-                                                                 disabled={isDeleting}
-                                                            >
-                                                                 Delete
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuItem>View Details</DropdownMenuItem>
-                                                       </DropdownMenuContent>
-                                                  </DropdownMenu>
+
+                                                  {/* edit admin */}
+                                                  <Button variant="ghost" className="h-8 w-8 p-0">
+                                                       <Pencil />
+                                                  </Button>
+
+                                                  {/* admin details */}
+                                                  <Button variant="ghost" className="h-8 w-8 p-0">
+                                                       <Eye />
+                                                  </Button>
+
+                                                  {/* admin delete button */}
+                                                  <AlertDialog>
+                                                       <AlertDialogTrigger asChild>
+                                                            <Button variant="ghost" disabled={isDeleting}><Trash /></Button>
+                                                       </AlertDialogTrigger>
+                                                       <AlertDialogContent>
+                                                            <AlertDialogHeader>
+                                                                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                                 <AlertDialogDescription>
+                                                                      This action cannot be undone. This will permanently delete your
+                                                                      account and remove your data from our servers.
+                                                                 </AlertDialogDescription>
+                                                            </AlertDialogHeader>
+                                                            <AlertDialogFooter>
+                                                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                                 <AlertDialogAction disabled={isDeleting} onClick={() => handleDelete(admin?.id)} className=" bg-red-600 font-extrabold">Continue</AlertDialogAction>
+                                                            </AlertDialogFooter>
+                                                       </AlertDialogContent>
+                                                  </AlertDialog>
+
                                              </TableCell>
                                         </TableRow>
                                    ))
@@ -251,21 +254,7 @@ export default function AdminTable() {
                     </div>
                </div>
 
-               {/* Delete AlertDialog */}
-               <AlertDialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <AlertDialogContent>
-                         <AlertDialogHeader>
-                              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                   This action cannot be undone. This will permanently delete the admin account.
-                              </AlertDialogDescription>
-                         </AlertDialogHeader>
-                         <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction onClick={confirmDelete} className="bg-red-500">Delete</AlertDialogAction>
-                         </AlertDialogFooter>
-                    </AlertDialogContent>
-               </AlertDialog>
+
           </div>
      )
 }
