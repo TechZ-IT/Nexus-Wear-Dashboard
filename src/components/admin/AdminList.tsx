@@ -3,7 +3,6 @@
 import * as React from "react"
 import { useState } from "react"
 import { useDeleteAdminMutation, useGetAdminsQuery } from "@/redux/api/adminApi/adminApi"
-import { AllAdmins } from "@/types/allAdmin"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
