@@ -30,7 +30,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <Toaster position="bottom-right" reverseOrder={false} />
             <div className="flex w-full">
                 {!hideSidebar && <AppSidebar />}
-                <main className="flex-1 p-4">{children}</main>
+                <main className=" w-full">{children}</main>
             </div>
         </SidebarProvider>
     );
