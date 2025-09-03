@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
-import ClientLayout from './client-layout';
+import AdminLayout from "./AdminLayout";
+import ReduxProvider from "@/redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 const roboto = Roboto({ weight: ["400", "700"], subsets: ["latin"] });
@@ -19,7 +20,11 @@ export default function RootLayout({
       return (
             <html lang="en">
                   <body className={`${inter.className} ${roboto.className} antialiased`}>
-                        <ClientLayout>{children}</ClientLayout>
+                        <ReduxProvider>
+                              <AdminLayout>
+                                    {children}
+                              </AdminLayout>
+                        </ReduxProvider>
                   </body>
             </html>
       );
