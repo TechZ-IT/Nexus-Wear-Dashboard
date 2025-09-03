@@ -49,7 +49,7 @@ export function NavUser({
   const handleLogout =  () => {
     dispatch(logout())
     router.push('/signin')
-    toast.success('admin logout successfully')
+    toast.success('admin logged out')
   }
   return (
     <SidebarMenu>
