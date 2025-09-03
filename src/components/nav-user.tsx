@@ -31,6 +31,8 @@ import {
 } from "@/components/ui/sidebar"
 import { useAppDispatch } from "@/hooks/useRedux"
 import { logout } from "@/redux/features/authSlice"
+import { useRouter } from "next/navigation"
+import toast from "react-hot-toast"
 
 export function NavUser({
   user,
@@ -43,8 +45,11 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const dispatch = useAppDispatch()
-  const handleLogout = () => {
+  const router = useRouter()
+  const handleLogout =  () => {
     dispatch(logout())
+    router.push('/signin')
+    toast.success('admin logout successfully')
   }
   return (
     <SidebarMenu>
