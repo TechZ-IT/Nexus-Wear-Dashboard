@@ -7,10 +7,14 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { usePathname, useRouter } from "next/navigation";
 import { useAppSelector } from "@/hooks/useRedux";
 import { Separator } from "@radix-ui/react-separator";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Breadcrumb, BreadcrumbItem,  BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     const pathname = usePathname();
+    console.log(pathname)
+    const formattedPathname = pathname.slice(1).replace(/^./, c => c.toUpperCase());
+
+
     const router = useRouter();
     const { token } = useAppSelector((state) => state.auth);
 
@@ -44,7 +48,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                                 <BreadcrumbList>
                                     <BreadcrumbSeparator className="hidden md:block" />
                                     <BreadcrumbItem>
-                                        <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                                        <BreadcrumbPage>{formattedPathname}</BreadcrumbPage>
                                     </BreadcrumbItem>
                                 </BreadcrumbList>
                             </Breadcrumb>
