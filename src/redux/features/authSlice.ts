@@ -16,7 +16,7 @@ const initialState: AuthState = {
     error: null,
 };
 
-// 🔹 Admin Login Thunk 
+//  Admin Login Thunk
 export const loginAdmin = createAsyncThunk(
     "auth/loginAdmin",
     async (
@@ -28,10 +28,8 @@ export const loginAdmin = createAsyncThunk(
                 "https://nexus-wear-backend-production.up.railway.app/admin/login",
                 { email, password }
             );
-            console.log(res.data);
-            return res.data; 
-        } catch (err) {
-            console.log(err)
+            return res.data;
+        } catch {
             return rejectWithValue("Admin login failed");
         }
     }
@@ -44,15 +42,6 @@ const authSlice = createSlice({
         logout: (state) => {
             state.user = null;
             state.token = null;
-            localStorage.removeItem("auth");
-        },
-        loadUser: (state) => {
-            const saved = localStorage.getItem("auth");
-            if (saved) {
-                const parsed = JSON.parse(saved);
-                state.user = parsed.data;
-                state.token = parsed.accessToken;
-            }
         },
     },
     extraReducers: (builder) => {
@@ -63,9 +52,8 @@ const authSlice = createSlice({
             })
             .addCase(loginAdmin.fulfilled, (state, action) => {
                 state.loading = false;
-                state.user = action.payload.data; // Admin info
-                state.token = action.payload.accessToken; // JWT token
-                localStorage.setItem("auth", JSON.stringify(action.payload));
+                state.user = action.payload.data;
+                state.token = action.payload.accessToken;
             })
             .addCase(loginAdmin.rejected, (state, action) => {
                 state.loading = false;
@@ -74,5 +62,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout, loadUser } = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

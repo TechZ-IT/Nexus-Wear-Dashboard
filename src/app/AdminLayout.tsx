@@ -17,6 +17,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
     const router = useRouter();
     const { token } = useAppSelector((state) => state.auth);
+    console.log(token);
 
     const hideSidebar = pathname === "/signin";
 
