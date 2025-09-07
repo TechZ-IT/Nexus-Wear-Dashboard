@@ -1,22 +1,23 @@
 export type Role = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export type Admin = {
   id: string;
   name: string;
   email: string;
   phone: string;
+  nationalId: string;
+  addressLine: string;
   image: string | null;
+  roleId: string;
   role: Role;
-  roleId: number;
+  status: "pending" | "active" | "inactive" |"deleted" 
   createdAt: string;
   updatedAt: string;
-  status:string
-}
-
-
+  deletedAt: string | null;
+};

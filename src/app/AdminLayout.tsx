@@ -17,6 +17,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
     const router = useRouter();
     const { token } = useAppSelector((state) => state.auth);
+    console.log(token);
 
     const hideSidebar = pathname === "/signin";
 
@@ -36,9 +37,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <div className="flex w-full">
                 {!hideSidebar && <AppSidebar />}
 
-                <main className="w-full">
+                <main className="w-full px-4">
                     <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-                        <div className="flex items-center  px-4">
+                        <div className="flex items-center  ">
                             <SidebarTrigger className="-ml-1" />
                             <Separator
                                 orientation="vertical"

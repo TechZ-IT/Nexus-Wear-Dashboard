@@ -36,12 +36,14 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Admin } from "@/types/admin"
 import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
+import { useRouter } from "next/navigation"
 
 export default function AdminTable() {
      const [currentPage, setCurrentPage] = useState(1)
      const [itemsPerPage, setItemsPerPage] = useState(10)
      const [searchTerm, setSearchTerm] = useState('')
      const [statusFilter, setStatusFilter] = useState("all")
+     const router = useRouter()
 
      const { data, isLoading, refetch } = useGetAdminsQuery({
           page: currentPage,
@@ -82,7 +84,7 @@ export default function AdminTable() {
      }
 
      return (
-          <div className="w-full px-6 pb-6">
+          <div className="w-full  pb-6">
 
                {/* Search + Filter + Add */}
                <div className="flex justify-between items-center mb-4">
@@ -152,12 +154,12 @@ export default function AdminTable() {
                                              <TableCell>
 
                                                   {/* edit admin */}
-                                                  <Button variant="ghost" className="h-8 w-8 p-0">
+                                                  <Button  variant="ghost" className="h-8 w-8 p-0">
                                                        <Pencil />
                                                   </Button>
 
                                                   {/* admin details */}
-                                                  <Button variant="ghost" className="h-8 w-8 p-0">
+                                                  <Button onClick={() => router.push(`/admin/details/${admin.id}`)} variant="ghost" className="h-8 w-8 p-0">
                                                        <Eye />
                                                   </Button>
 

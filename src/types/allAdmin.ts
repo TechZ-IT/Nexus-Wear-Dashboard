@@ -1,4 +1,4 @@
-import { Admin, Role } from "./admin";
+import { Admin } from "./admin";
 
 
 export type AllAdmins = {

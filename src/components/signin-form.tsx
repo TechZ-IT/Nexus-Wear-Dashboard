@@ -6,8 +6,7 @@ import { Label } from "@/components/ui/label"
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
-import { loadUser, loginAdmin } from "@/redux/features/authSlice"
+import {  loginAdmin } from "@/redux/features/authSlice"
 import toast from "react-hot-toast"
 
 interface UserAuth {
@@ -26,22 +25,21 @@ export default function SigninForm({ className, ...props }: React.ComponentProps
        const router = useRouter()
 
 
-       useEffect(() => {
-              dispatch(loadUser());
-       }, [dispatch]);
-
-
-
        const onSubmit: SubmitHandler<UserAuth> = async (data) => {
               try {
                      await dispatch(loginAdmin(data)).unwrap();
                      toast.success("Login Successful 🎉");
                      router.push("/");
-              } catch (err) {
-                     console.error(err)
-                     toast.error("Login failed ");
+              } catch (err: any) {
+                     console.error(err);
+                     const message =
+                            typeof err === "string"
+                                   ? err
+                                   : err?.message || "Login failed. Please try again.";
+                     toast.error(message);
               }
        };
+
 
        return (
 
