@@ -58,11 +58,11 @@ const AdminDetails = () => {
 
                {/* Table Section */}
                <div className="overflow-x-auto  rounded ">
-                    <h1 className="text-xl sm:text-2xl font-extrabold mb-3 sm:mb-4 ">Admin Details:</h1>
+                    <h1 className="text-xl sm:text-2xl font-extrabold mb-2 ">Admin Details:</h1>
                     <table className="w-full  border-collapse border border-gray-300 text-sm sm:text-base">
                          <tbody>
                               {tableData.map((item, idx) => (
-                                   <tr key={idx} className="border-b last:border-b-0">
+                                   <tr key={idx} className="border">
                                         <td className="font-semibold p-2 border-r whitespace-nowrap">{item.label}</td>
                                         <td className="p-2">{item.value}</td>
                                    </tr>
