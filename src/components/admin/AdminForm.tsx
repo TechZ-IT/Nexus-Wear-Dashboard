@@ -1,118 +1,222 @@
 /* eslint-disable @next/next/no-img-element */
-
-"use client"
+"use client";
 import React, { useState } from "react";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Label } from "../ui/label";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { Admin } from "@/types/admin";
+import { useGetRoleQuery } from "@/redux/api/roleApi/roleApi";
+import { Role } from "@/types/role";
+import { useCreateAdminMutation } from "@/redux/api/adminApi/adminApi";
 
 const AdminForm = () => {
-     const [image, setImage] = useState<string | null>(null);
+     const [imagePreview, setImagePreview] = useState<string | null>(null);
+     const router = useRouter();
+     const { data } = useGetRoleQuery();
+     const [createAdmin] = useCreateAdminMutation();
 
-     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          const file = e.target.files?.[0];
-          if (file) {
-               setImage(URL.createObjectURL(file)); // temporary preview URL
+     const roles: Role[] = data || [];
+
+     const {
+          handleSubmit,
+          register,
+          formState: { errors },
+     } = useForm<Admin>();
+
+     const onSubmit: SubmitHandler<Admin> = async (data) => {
+          const formData = new FormData();
+
+          // append text fields
+          formData.append("name", data.name);
+          formData.append("email", data.email);
+          formData.append("phone", data.phone);
+          formData.append("nationalId", data.nationalId);
+          formData.append("addressLine", data.addressLine);
+          formData.append("password", data.password);
+          formData.append("roleId", String(data.roleId));
+          formData.append("status", data.status);
+
+          // append file
+          if (data.image && data.image[0]) {
+               formData.append("image", data.image[0]);
+          }
+
+
+          try {
+               const result = await createAdmin(formData).unwrap();
+               console.log("Admin created:", result);
+               // router.push("/admin-list"); // redirect if needed
+          } catch (err) {
+               console.error("Failed to create admin:", err);
           }
      };
 
+     // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+     //      const file = e.target.files?.[0];
+     //      if (file) {
+     //           setImagePreview(URL.createObjectURL(file));
+     //      }
+     // };
+
      return (
           <Card className="p-4 rounded-sm gap-4">
-               <h1 className="text-xl font-semibold ">Create Admin</h1>
+               <h1 className="text-xl font-semibold">Create Admin</h1>
 
-               <form className="bg-white   grid grid-cols-1 md:grid-cols-3 gap-4">
+               <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="bg-white grid grid-cols-1 md:grid-cols-3 gap-4"
+               >
                     {/* Left Form Section */}
-                    <Card className="md:col-span-2 p-4 rounded-sm">
+                    <Card className="md:col-span-2 p-4 rounded-sm space-y-4">
                          <div>
                               <label className="block text-sm font-medium mb-1">Name</label>
                               <Input
                                    type="text"
-                                   name="name"
                                    placeholder="Enter Admin Name"
+                                   {...register("name", { required: "Name is required" })}
                                    className="h-12 w-full border border-gray-300 rounded-md "
                               />
+                              {errors.name && (
+                                   <p className="text-red-500 text-sm mt-1">
+                                        {errors.name.message}
+                                   </p>
+                              )}
                          </div>
 
                          <div>
                               <label className="block text-sm font-medium mb-1">Email</label>
                               <Input
                                    type="email"
-                                   name="email"
+                                   {...register("email", { required: "Email is required" })}
                                    placeholder="Enter Admin Email"
                                    className="h-12 w-full border border-gray-300 rounded-md "
                               />
+                              {errors.email && (
+                                   <p className="text-red-500 text-sm mt-1">
+                                        {errors.email.message}
+                                   </p>
+                              )}
                          </div>
 
                          <div>
                               <label className="block text-sm font-medium mb-1">Phone</label>
                               <Input
                                    type="tel"
-                                   name="phone"
+                                   {...register("phone", { required: "Phone is required" })}
                                    placeholder="Enter Phone Number"
                                    className="h-12 w-full border border-gray-300 rounded-md "
                               />
+                              {errors.phone && (
+                                   <p className="text-red-500 text-sm mt-1">
+                                        {errors.phone.message}
+                                   </p>
+                              )}
                          </div>
 
                          <div>
                               <label className="block text-sm font-medium mb-1">National Id</label>
                               <Input
-                                   type="tel"
-                                   name="nationalId"
+                                   type="text"
+                                   {...register("nationalId", { required: "National ID is required" })}
                                    placeholder="Enter National Id"
                                    className="h-12 w-full border border-gray-300 rounded-md "
                               />
+                              {errors.nationalId && (
+                                   <p className="text-red-500 text-sm mt-1">
+                                        {errors.nationalId.message}
+                                   </p>
+                              )}
                          </div>
 
                          <div>
                               <label className="block text-sm font-medium mb-1">Address</label>
                               <Input
                                    type="text"
-                                   name="addressLine"
+                                   {...register("addressLine", { required: "Address is required" })}
                                    placeholder="Enter Address"
                                    className="h-12 w-full border border-gray-300 rounded-md "
                               />
+                              {errors.addressLine && (
+                                   <p className="text-red-500 text-sm mt-1">
+                                        {errors.addressLine.message}
+                                   </p>
+                              )}
                          </div>
 
                          <div>
                               <label className="block text-sm font-medium mb-1">Password</label>
                               <Input
                                    type="password"
-                                   name="password"
+                                   {...register("password", { required: "Password is required" })}
                                    placeholder="Enter Password"
                                    className="h-12 w-full border border-gray-300 rounded-md "
                               />
+                              {errors.password && (
+                                   <p className="text-red-500 text-sm mt-1">
+                                        {errors.password.message}
+                                   </p>
+                              )}
                          </div>
 
                          <div className="space-y-2">
                               <Label htmlFor="role">Role</Label>
-                              <Select>
-                                   <SelectTrigger id="role" className="w-full py-6">
-                                        <SelectValue placeholder="Select role" />
-                                   </SelectTrigger>
-                                   <SelectContent>
-                                        <SelectItem value="1">Admin</SelectItem>
-                                        <SelectItem value="2">Manager</SelectItem>
-                                   </SelectContent>
-                              </Select>
+                              <select
+                                   id="role"
+                                   {...register("roleId", { required: "Role is required" })}
+                                   className="h-12 w-full border border-gray-300 rounded-md px-2"
+                                   defaultValue=""
+                              >
+                                   <option value="" disabled>
+                                        Select role
+                                   </option>
+                                   {roles.map((item) => (
+                                        <option key={item.id} value={item.id}>
+                                             {item.name}
+                                        </option>
+                                   ))}
+                              </select>
+                              {errors.roleId && (
+                                   <p className="text-red-500 text-sm">{errors.roleId.message}</p>
+                              )}
+                         </div>
+
+                         <div className="space-y-2">
+                              <Label htmlFor="status">Status</Label>
+                              <select
+                                   id="status"
+                                   {...register("status", { required: "Status is required" })}
+                                   className="h-12 w-full border border-gray-300 rounded-md px-2"
+                                   defaultValue=""
+                              >
+                                   <option value="" disabled>
+                                        Select status
+                                   </option>
+                                   <option value="active">Active</option>
+                                   <option value="pending">Pending</option>
+                                   <option value="inactive">Inactive</option>
+                                   <option value="deleted">Deleted</option>
+                              </select>
+                              {errors.status && (
+                                   <p className="text-red-500 text-sm">{errors.status.message}</p>
+                              )}
                          </div>
                     </Card>
 
                     {/* Right Profile Image Section */}
-
                     <div className="flex flex-col items-center justify-center border border-gray-200 rounded-sm p-4 relative">
-                         {image ? (
+                         {imagePreview ? (
                               <div className="relative">
                                    <img
-                                        src={image}
+                                        src={imagePreview}
                                         alt="Profile Preview"
                                         className="w-32 h-32 object-cover rounded-md mb-4"
                                    />
-                                   {/* Delete button */}
                                    <button
                                         type="button"
-                                        onClick={() => setImage(null)}
+                                        onClick={() => setImagePreview(null)}
                                         className="absolute top-1 right-1 bg-red-600 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full shadow-md hover:bg-red-700"
                                    >
                                         ✕
@@ -123,51 +227,40 @@ const AdminForm = () => {
                                    <span className="text-gray-400">Image</span>
                               </div>
                          )}
-                         {/* image Input field style */}
+
                          <div className="w-full">
                               <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 transition">
-                                   <div className="h-12 flex flex-col items-center justify-center pt-b-6">
-                                        <svg
-                                             className="w-8 h-8 mb-2 text-gray-500"
-                                             fill="none"
-                                             stroke="currentColor"
-                                             strokeWidth="2"
-                                             viewBox="0 0 24 24"
-                                        >
-                                             <path
-                                                  strokeLinecap="round"
-                                                  strokeLinejoin="round"
-                                                  d="M7 16a4 4 0 01-.88-7.903A5.002 5.002 0 0115.9 6H16a5 5 0 011 9.9V16m-4-4v6m0 0l-2-2m2 2l2-2"
-                                             />
-                                        </svg>
+                                   <div className="flex flex-col items-center justify-center ">
                                         <p className="text-sm text-gray-500">
-                                             <span className="font-semibold">Click to upload</span> or drag & drop
+                                             <span className="font-semibold">Click to upload</span> or drag
+                                             & drop
                                         </p>
                                         <p className="text-xs text-gray-400">PNG, JPG (max 2MB)</p>
                                    </div>
                                    <Input
                                         type="file"
                                         accept="image/*"
-                                        onChange={handleFileChange}
+                                        {...register("image", {
+                                             onChange: (e) => {
+                                                  const file = e.target.files?.[0];
+                                                  if (file) {
+                                                       setImagePreview(URL.createObjectURL(file));
+                                                  }
+                                             },
+                                        })}
                                         className="h-12 hidden"
                                    />
+
                               </label>
                          </div>
                     </div>
 
-
                     {/* Buttons */}
                     <div className="md:col-span-3 flex justify-end gap-2 ">
-                         <Button
-                              type="button"
-                              className="bg-red-600 "
-                         >
+                         <Button type="button" className="bg-red-600 ">
                               Discard
                          </Button>
-                         <Button
-                              type="submit"
-                              className="bg-blue-600 "
-                         >
+                         <Button type="submit" className="bg-blue-600 ">
                               Create
                          </Button>
                     </div>

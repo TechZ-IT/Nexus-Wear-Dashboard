@@ -17,6 +17,8 @@ import {
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
     const pathname = usePathname();
+    console.log(pathname)
+    const formattedPathname = pathname.slice(1).replace(/^./, c => c.toUpperCase());
     const router = useRouter();
     const { token } = useAppSelector((state) => state.auth);
 
@@ -31,10 +33,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     if (!token && pathname !== "/signin") {
         return null;
     }
-
-    // Split pathname and remove last part (like "35")
-    const parts = pathname.split("/").filter(Boolean);
-    const breadcrumbParts = parts.length > 1 ? parts.slice(0, -1) : parts;
 
     return (
         <SidebarProvider>
@@ -52,13 +50,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                             />
                             <Breadcrumb>
                                 <BreadcrumbList>
-                                    {breadcrumbParts.map((part, index) => (
-                                        <BreadcrumbItem key={index} className="flex items-center">
-                                            {/* Always render separator before each part */}
-                                            <BreadcrumbSeparator className="hidden md:block" />
-                                            <BreadcrumbPage>{part.toUpperCase()}</BreadcrumbPage>
-                                        </BreadcrumbItem>
-                                    ))}
+                                    <BreadcrumbSeparator className="hidden md:block" />
+                                    <BreadcrumbItem>
+                                        <BreadcrumbPage>{formattedPathname}</BreadcrumbPage>
+                                    </BreadcrumbItem>
                                 </BreadcrumbList>
                             </Breadcrumb>
                         </div>

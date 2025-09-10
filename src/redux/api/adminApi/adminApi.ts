@@ -13,8 +13,15 @@ export const adminApi = apiSlice.injectEndpoints({
         }),
         getAdminById: builder.query({
             query: (adminId) => `/admin/${adminId}`
+        }),
+        createAdmin: builder.mutation({
+            query: (formData:FormData) => ({
+                url: '/admin',
+                method:"POST",
+                body:formData
+            })
         })
     }),
 });
 
-export const { useGetAdminsQuery, useDeleteAdminMutation, useGetAdminByIdQuery } = adminApi;
+export const { useGetAdminsQuery, useDeleteAdminMutation, useGetAdminByIdQuery, useCreateAdminMutation } = adminApi;
