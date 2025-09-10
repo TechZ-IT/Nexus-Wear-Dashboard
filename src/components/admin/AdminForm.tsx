@@ -12,14 +12,14 @@ const AdminForm = () => {
      const [image, setImage] = useState<string | null>(null);
 
      const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          const file = e.target.files?.[0]; 
+          const file = e.target.files?.[0];
           if (file) {
                setImage(URL.createObjectURL(file)); // temporary preview URL
           }
      };
 
      return (
-          <Card className="p-4 rounded-sm">
+          <Card className="p-4 rounded-sm gap-4">
                <h1 className="text-xl font-semibold ">Create Admin</h1>
 
                <form className="bg-white   grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -152,11 +152,12 @@ const AdminForm = () => {
                                         className="h-12 hidden"
                                    />
                               </label>
-                         </div>                   </div>
+                         </div>
+                    </div>
 
 
                     {/* Buttons */}
-                    <div className="md:col-span-3 flex justify-end gap-2 mt-6">
+                    <div className="md:col-span-3 flex justify-end gap-2 ">
                          <Button
                               type="button"
                               className="bg-red-600 "
