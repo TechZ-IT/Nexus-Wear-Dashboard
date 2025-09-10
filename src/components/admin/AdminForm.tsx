@@ -49,8 +49,8 @@ const AdminForm = () => {
           try {
                const result = await createAdmin(formData).unwrap();
                console.log("Admin created:", result);
-               router.push("/admin"); // redirect if needed
-               toast.success("Admin Created Successfully")
+               // router.push("/admin"); // redirect if needed
+               toast.success(`${result.data.role.name} Created Successfully`)
           } catch (err) {
                console.error("Failed to create admin:", err);
           }
