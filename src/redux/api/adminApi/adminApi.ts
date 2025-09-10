@@ -4,6 +4,7 @@ export const adminApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getAdmins: builder.query({
             query: ({ page, limit }) => `/admin?page=${page}&limit=${limit}`,
+            providesTags: ["Admin"],
         }),
         deleteAdmin: builder.mutation({
             query: (adminId) => ({
@@ -19,7 +20,8 @@ export const adminApi = apiSlice.injectEndpoints({
                 url: '/admin',
                 method:"POST",
                 body:formData
-            })
+            }),
+            invalidatesTags: ["Admin"],
         })
     }),
 });

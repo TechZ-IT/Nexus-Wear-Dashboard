@@ -10,7 +10,8 @@ import { useRouter } from "next/navigation";
 import { Admin } from "@/types/admin";
 import { useGetRoleQuery } from "@/redux/api/roleApi/roleApi";
 import { Role } from "@/types/role";
-import { useCreateAdminMutation } from "@/redux/api/adminApi/adminApi";
+import { useCreateAdminMutation, useGetAdminsQuery } from "@/redux/api/adminApi/adminApi";
+import toast from "react-hot-toast";
 
 const AdminForm = () => {
      const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -48,21 +49,16 @@ const AdminForm = () => {
           try {
                const result = await createAdmin(formData).unwrap();
                console.log("Admin created:", result);
-               // router.push("/admin-list"); // redirect if needed
+               router.push("/admin"); // redirect if needed
+               toast.success("Admin Created Successfully")
           } catch (err) {
                console.error("Failed to create admin:", err);
           }
      };
 
-     // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-     //      const file = e.target.files?.[0];
-     //      if (file) {
-     //           setImagePreview(URL.createObjectURL(file));
-     //      }
-     // };
 
      return (
-          <Card className="p-4 rounded-sm gap-4">
+          <Card className="p-4 rounded-sm gap-4 shadow-none">
                <h1 className="text-xl font-semibold">Create Admin</h1>
 
                <form
@@ -70,7 +66,7 @@ const AdminForm = () => {
                     className="bg-white grid grid-cols-1 md:grid-cols-3 gap-4"
                >
                     {/* Left Form Section */}
-                    <Card className="md:col-span-2 p-4 rounded-sm space-y-4">
+                    <Card className="md:col-span-2 p-4 gap-2 rounded-sm shadow-none">
                          <div>
                               <label className="block text-sm font-medium mb-1">Name</label>
                               <Input
@@ -212,7 +208,7 @@ const AdminForm = () => {
                                    <img
                                         src={imagePreview}
                                         alt="Profile Preview"
-                                        className="w-32 h-32 object-cover rounded-md mb-4"
+                                        className="w-32 h-32 object-cover rounded-full mb-4 border border-gray-300"
                                    />
                                    <button
                                         type="button"
@@ -241,6 +237,10 @@ const AdminForm = () => {
                                         type="file"
                                         accept="image/*"
                                         {...register("image", {
+                                             validate: {
+                                                  lessThan2MB: (files) =>
+                                                       files?.[0]?.size <= 2000000 || "File size should be less than 2MB",
+                                             },
                                              onChange: (e) => {
                                                   const file = e.target.files?.[0];
                                                   if (file) {
@@ -250,6 +250,10 @@ const AdminForm = () => {
                                         })}
                                         className="h-12 hidden"
                                    />
+                                   {errors.image && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.image.message as string}</p>
+                                   )}
+
 
                               </label>
                          </div>
