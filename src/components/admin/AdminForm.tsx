@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { Admin } from "@/types/admin";
 import { useGetRoleQuery } from "@/redux/api/roleApi/roleApi";
 import { Role } from "@/types/role";
-import { useCreateAdminMutation, useGetAdminsQuery } from "@/redux/api/adminApi/adminApi";
+import { useCreateAdminMutation } from "@/redux/api/adminApi/adminApi";
 import toast from "react-hot-toast";
 
 const AdminForm = () => {
@@ -238,10 +238,14 @@ const AdminForm = () => {
                                         accept="image/*"
                                         {...register("image", {
                                              validate: {
-                                                  lessThan2MB: (files) =>
-                                                       files?.[0]?.size <= 2000000 || "File size should be less than 2MB",
+                                                  required: (value) =>
+                                                       (value && (value as unknown as FileList).length > 0) || "Image is required",
+                                                  lessThan2MB: (value) => {
+                                                       const files = value as unknown as FileList;
+                                                       return !files?.[0] || files[0].size <= 2_000_000 || "File size should be less than 2MB";
+                                                  },
                                              },
-                                             onChange: (e) => {
+                                             onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
                                                   const file = e.target.files?.[0];
                                                   if (file) {
                                                        setImagePreview(URL.createObjectURL(file));
@@ -251,8 +255,10 @@ const AdminForm = () => {
                                         className="h-12 hidden"
                                    />
                                    {errors.image && (
-                                        <p className="text-red-500 text-sm mt-1">{errors.image.message as string}</p>
+                                        <p className="text-red-500 text-sm mt-1">{errors.image.message}</p>
                                    )}
+
+
 
 
                               </label>
@@ -261,6 +267,9 @@ const AdminForm = () => {
 
                     {/* Buttons */}
                     <div className="md:col-span-3 flex justify-end gap-2 ">
+                         <Button onClick={() => router.back()} type="button" className="bg-gray-600 ">
+                              Go Back
+                         </Button>
                          <Button type="button" className="bg-red-600 ">
                               Discard
                          </Button>

@@ -3,12 +3,11 @@
 import * as React from "react"
 import {
   GalleryVerticalEnd,
-  ShoppingCart, Package, Users, CreditCard, Folder, Layers, Palette, Ruler, Square, Bell, Mail, Newspaper, HelpCircle, Settings, UserCog, Shield, Image, Share2,
+  ShoppingCart, Package, Users, CreditCard, Folder, Layers, Palette, Ruler, Square, Bell, Mail, HelpCircle, Settings, UserCog, Shield, Image, Share2,
   Home,
   PlusCircle
 } from "lucide-react"
 
-import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
 import { TeamSwitcher } from "@/components/team-switcher"
