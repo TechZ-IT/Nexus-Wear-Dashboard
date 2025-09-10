@@ -106,7 +106,7 @@ export default function AdminTable() {
                               <option value="pending">Pending</option>
                               <option value="deleted">Deleted</option>
                          </select>
-                         <Button onClick={() => alert("Add Admin")}>Add Admin</Button>
+                         <Button onClick={() => router.push('/admin/create')}>Add Admin</Button>
                     </div>
                </div>
 

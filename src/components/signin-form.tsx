@@ -17,8 +17,6 @@ interface UserAuth {
 export default function SigninForm({ className, ...props }: React.ComponentProps<"form">) {
 
        const dispatch = useAppDispatch()
-       const { user, loading, error } = useAppSelector((state) => state.auth)
-       console.log(user, loading, error);
 
        const { handleSubmit, register } = useForm<UserAuth>()
 
@@ -30,15 +28,19 @@ export default function SigninForm({ className, ...props }: React.ComponentProps
                      await dispatch(loginAdmin(data)).unwrap();
                      toast.success("Login Successful 🎉");
                      router.push("/");
-              } catch (err: any) {
-                     console.error(err);
-                     const message =
-                            typeof err === "string"
-                                   ? err
-                                   : err?.message || "Login failed. Please try again.";
-                     toast.error(message);
+              } catch (err: unknown) {
+                     // Narrowing the type
+                     if (err instanceof Error) {
+                            toast.error(err.message);
+                     } else if (typeof err === "string") {
+                            toast.error(err);
+                     } else {
+                            toast.error("Something went wrong!");
+                     }
               }
        };
+
+
 
 
        return (
