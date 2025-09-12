@@ -37,6 +37,7 @@ import {
 import { Admin } from "@/types/admin"
 import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 export default function AdminTable() {
      const [currentPage, setCurrentPage] = useState(1)
@@ -49,6 +50,14 @@ export default function AdminTable() {
           page: currentPage,
           limit: itemsPerPage,
      })
+
+
+     
+
+
+
+
+
 
      const [deleteAdmin, { isLoading: isDeleting }] = useDeleteAdminMutation()
 
@@ -116,6 +125,7 @@ export default function AdminTable() {
                          <TableHeader>
                               <TableRow>
                                    <TableHead>#</TableHead>
+                                   <TableHead>Image</TableHead>
                                    <TableHead>Name</TableHead>
                                    <TableHead>Email</TableHead>
                                    <TableHead>Phone</TableHead>
@@ -136,6 +146,17 @@ export default function AdminTable() {
                                    filteredAdmins.map((admin, idx) => (
                                         <TableRow key={admin.id}>
                                              <TableCell>{(currentPage - 1) * itemsPerPage + idx + 1}</TableCell>
+                                             <TableCell>
+                                                  <Image
+                                                       src={admin.image ?? "/profileImg.jpg"}
+                                                       alt="images"
+                                                       width={50}
+                                                       height={50}
+                                                       quality={75}
+                                                       className="h-12 object-contain w-12 "
+                                                       draggable={false}
+                                                  />
+                                             </TableCell>
                                              <TableCell>{admin.name}</TableCell>
                                              <TableCell>{admin.email}</TableCell>
                                              <TableCell>{admin.phone}</TableCell>
@@ -154,7 +175,7 @@ export default function AdminTable() {
                                              <TableCell>
 
                                                   {/* edit admin */}
-                                                  <Button  variant="ghost" className="h-8 w-8 p-0">
+                                                  <Button onClick={() => router.push(`/admin/update/${admin.id}`)}  variant="ghost" className="h-8 w-8 p-0">
                                                        <Pencil />
                                                   </Button>
 

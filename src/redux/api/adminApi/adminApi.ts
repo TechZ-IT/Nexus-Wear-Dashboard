@@ -6,24 +6,36 @@ export const adminApi = apiSlice.injectEndpoints({
             query: ({ page, limit }) => `/admin?page=${page}&limit=${limit}`,
             providesTags: ["Admin"],
         }),
+
+        getAdminById: builder.query({
+            query: (adminId) => `/admin/${adminId}`
+        }),
+
         deleteAdmin: builder.mutation({
             query: (adminId) => ({
                 url: `/admin/${adminId}`,
                 method: "DELETE",
             })
         }),
-        getAdminById: builder.query({
-            query: (adminId) => `/admin/${adminId}`
-        }),
+
         createAdmin: builder.mutation({
-            query: (formData:FormData) => ({
+            query: (formData: FormData) => ({
                 url: '/admin',
-                method:"POST",
-                body:formData
+                method: "POST",
+                body: formData
             }),
             invalidatesTags: ["Admin"],
-        })
+        }),
+        updateAdminDetails: builder.mutation({
+            query: ({ formData, id }) => ({
+                url: `/admin/${id}`,
+                method: "PATCH",
+                body: formData
+            }),
+        }),
+
+
     }),
 });
 
-export const { useGetAdminsQuery, useDeleteAdminMutation, useGetAdminByIdQuery, useCreateAdminMutation } = adminApi;
+export const { useGetAdminsQuery, useDeleteAdminMutation, useGetAdminByIdQuery, useCreateAdminMutation,useUpdateAdminDetailsMutation } = adminApi;
