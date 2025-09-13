@@ -216,7 +216,7 @@ const AdminForm = () => {
                                                  id="role"
                                                  defaultValue=""
                                                  {...register("roleId", { required: "Role is required" })}
-                                                 className="h-12 w-full border border-gray-300 rounded-md px-2"
+                                                 className="h-12 w-full border border-gray-300 rounded-md px-2 appearance-none"
                                           >
                                                  <option value="" disabled>
                                                         Select role
@@ -239,7 +239,7 @@ const AdminForm = () => {
                                                  id="status"
                                                  defaultValue=""
                                                  {...register("status", { required: "Status is required" })}
-                                                 className="h-12 w-full border border-gray-300 rounded-md px-2"
+                                                 className="h-12 w-full border border-gray-300 rounded-md px-2 appearance-none"
                                           >
                                                  <option value="" disabled>
                                                         Select status
