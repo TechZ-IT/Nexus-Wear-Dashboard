@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import {  loginAdmin } from "@/redux/features/authSlice"
 import toast from "react-hot-toast"
+import { useState } from "react"
 
 interface UserAuth {
        email: string
@@ -19,17 +20,18 @@ export default function SigninForm({ className, ...props }: React.ComponentProps
        const dispatch = useAppDispatch()
 
        const { handleSubmit, register } = useForm<UserAuth>()
+       const [loading,setLoading] = useState(false)
 
        const router = useRouter()
 
 
        const onSubmit: SubmitHandler<UserAuth> = async (data) => {
               try {
+                     setLoading(true)
                      await dispatch(loginAdmin(data)).unwrap();
                      toast.success("Login Successful 🎉");
                      router.push("/");
               } catch (err: unknown) {
-                     // Narrowing the type
                      if (err instanceof Error) {
                             toast.error(err.message);
                      } else if (typeof err === "string") {
@@ -37,6 +39,8 @@ export default function SigninForm({ className, ...props }: React.ComponentProps
                      } else {
                             toast.error("Something went wrong!");
                      }
+              }finally{
+                     setLoading(false)
               }
        };
 
@@ -64,7 +68,7 @@ export default function SigninForm({ className, ...props }: React.ComponentProps
                                    </div>
                                    <Input {...register("password")} id="password" type="password" required />
                             </div>
-                            <Button type="submit" className="w-full">
+                            <Button disabled={loading} type="submit" className="w-full">
                                    Login
                             </Button>
                      </div>
