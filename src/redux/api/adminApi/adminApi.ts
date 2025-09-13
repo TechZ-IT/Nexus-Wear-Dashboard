@@ -32,6 +32,7 @@ export const adminApi = apiSlice.injectEndpoints({
                 method: "PATCH",
                 body: formData
             }),
+            invalidatesTags:["Admin"]
         }),
 
 
