@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 
 // Redux
-import { useDeleteAdminMutation, useGetAdminsQuery } from "@/redux/api/adminApi/adminApi"
+import { useDeleteAdminMutation, useGetAllAdminsQuery } from "@/redux/api/adminApi/adminApi"
 
 // UI Components
 import { Button } from "@/components/ui/button"
@@ -31,44 +31,62 @@ import { Admin } from "@/types/admin"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { useAppSelector } from "@/hooks/useRedux"
 
+
+
+
+
+
+
+
+
+
+
+
 export default function AdminTable() {
      // State
      const [currentPage, setCurrentPage] = useState(1)
      const [itemsPerPage, setItemsPerPage] = useState(10)
      const [searchTerm, setSearchTerm] = useState("")
      const [statusFilter, setStatusFilter] = useState("all")
-
+     console.log(searchTerm,statusFilter);
      const router = useRouter()
 
-     // API Calls
-     const { data, isLoading, refetch } = useGetAdminsQuery({
+     // API calls
+     const { data, isLoading, refetch } = useGetAllAdminsQuery({
           page: currentPage,
           limit: itemsPerPage,
+          search: searchTerm,      
+          status: statusFilter,
      })
+
      const [deleteAdmin, { isLoading: isDeleting }] = useDeleteAdminMutation()
 
-     const {token}  = useAppSelector((state) => state.auth)
-     console.log(token);
+     
 
      // Data
      const admins: Admin[] = data?.data || []
      const total = data?.total || 0
      const totalPages = Math.ceil(total / itemsPerPage)
-     console.log(admins);
+     // console.log(admins);
+
+
 
      // Filtering
-     const filteredAdmins = admins.filter((admin) => {
-          const matchesSearch =
-               admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-               admin.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-               admin.phone.includes(searchTerm) ||
-               admin.role.name.toLowerCase().includes(searchTerm.toLowerCase())
+     // const filteredAdmins = admins.filter((admin) => {
+     //      const matchesSearch =
+     //           admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     //           admin.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     //           admin.phone.includes(searchTerm) ||
+     //           admin.role.name.toLowerCase().includes(searchTerm.toLowerCase())
 
-          const matchesStatus =
-               statusFilter === "all" ? true : admin.status === statusFilter
+     //      const matchesStatus =
+     //           statusFilter === "all" ? true : admin.status === statusFilter
 
-          return matchesSearch && matchesStatus
-     })
+     //      return matchesSearch && matchesStatus
+     // })
+
+
+
 
      // Handlers
      const handleDelete = async (id: string) => {
@@ -81,6 +99,9 @@ export default function AdminTable() {
                }
           }
      }
+
+
+
 
      return (
           <div className="w-full pb-6">
@@ -152,8 +173,8 @@ export default function AdminTable() {
                                              Loading...
                                         </TableCell>
                                    </TableRow>
-                              ) : filteredAdmins.length ? (
-                                   filteredAdmins.map((admin, idx) => (
+                              ) : admins.length ? (
+                                   admins.map((admin, idx) => (
                                         <TableRow key={admin.id}>
                                              <TableCell>
                                                   {(currentPage - 1) * itemsPerPage + idx + 1}
