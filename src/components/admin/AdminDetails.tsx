@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '../ui/card';
+import Image from 'next/image';
 
 const AdminDetails = () => {
      const { id } = useParams();
@@ -42,9 +43,12 @@ const AdminDetails = () => {
           <Card className="w-full  p-4 sm:p-6 bg-white rounded-lg shadow">
                {/* Top Section */}
                <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center mb-4">
-                    <img
+                    <Image
                          src={image ?? "/profileImg.jpg"}
                          alt={name}
+                         width={100}
+                         height={100}
+                         quality={75}
                          className="w-32 h-32 sm:w-42 sm:h-42 rounded-full border border-gray-300 object-cover"
                     />
                     <div className="text-center sm:text-left">

@@ -25,7 +25,7 @@ export const loginAdmin = createAsyncThunk(
     ) => {
         try {
             const res = await axios.post(
-                "https://nexus-wear-backend-production.up.railway.app/admin/login",
+                `${process.env.NEXT_PUBLIC_BASE_URL}/admin/login`,
                 { email, password }
             );
             return res.data;
