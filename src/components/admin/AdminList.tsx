@@ -29,17 +29,6 @@ import { Pencil, Trash, Eye } from "lucide-react"
 // Types
 import { Admin } from "@/types/admin"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { useAppSelector } from "@/hooks/useRedux"
-
-
-
-
-
-
-
-
-
-
 
 
 export default function AdminTable() {
@@ -48,20 +37,32 @@ export default function AdminTable() {
      const [itemsPerPage, setItemsPerPage] = useState(10)
      const [searchTerm, setSearchTerm] = useState("")
      const [statusFilter, setStatusFilter] = useState("all")
-     console.log(searchTerm,statusFilter);
+     const [debouncedSearch, setDebouncedSearch] = useState(searchTerm)
+     console.log(searchTerm, debouncedSearch);
+
+
+     React.useEffect(() => {
+          const timeout = setTimeout(() => {
+               setDebouncedSearch(searchTerm)
+          }, 500);
+          return () => clearTimeout(timeout)
+     },[searchTerm])
+
+
+
      const router = useRouter()
 
      // API calls
      const { data, isLoading, refetch } = useGetAllAdminsQuery({
           page: currentPage,
           limit: itemsPerPage,
-          search: searchTerm,      
-          status: statusFilter,
+          search: debouncedSearch,
+          status: statusFilter === "all" ? undefined : statusFilter,
      })
 
      const [deleteAdmin, { isLoading: isDeleting }] = useDeleteAdminMutation()
 
-     
+
 
      // Data
      const admins: Admin[] = data?.data || []
@@ -129,7 +130,6 @@ export default function AdminTable() {
                                    <SelectItem value="20">20</SelectItem>
                               </SelectContent>
                          </Select>
-
 
                          <Select value={statusFilter} onValueChange={setStatusFilter}>
                               <SelectTrigger className="">
@@ -228,7 +228,7 @@ export default function AdminTable() {
                                                        <Eye />
                                                   </Button>
 
-                                                  {/* Delete */}
+
                                                   <AlertDialog>
                                                        <AlertDialogTrigger asChild>
                                                             <Button variant="ghost" disabled={isDeleting}>

@@ -1,5 +1,6 @@
 'use client'
 import SigninForm from "@/components/signin-form";
+import Image from "next/image";
 
 
 const SignIn = () => {
@@ -13,7 +14,7 @@ const SignIn = () => {
                     <div className="absolute inset-0 bg-[url('/loginBg1.jpg')] bg-cover" />
                     <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
                     <div className=" z-10 flex flex-col items-center gap-4 text-white">
-                        <img src="/mainLogo.png" alt="Logo" className="w-40" />
+                        <Image src="/mainLogo.png" alt="Logo" width={200} height={50} quality={75} className="w-40" />
                         <h1 className="text-6xl font-extrabold text-black">NEXUS WEAR</h1>
                     </div>
                 </div>

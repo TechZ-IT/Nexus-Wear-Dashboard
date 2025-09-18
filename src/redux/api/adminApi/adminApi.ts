@@ -13,6 +13,7 @@ export const adminApi = apiSlice.injectEndpoints({
                          status,
                     },
                }),
+               providesTags: ["Admin"],
           }),
 
           getAdminById: builder.query({
