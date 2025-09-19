@@ -72,7 +72,7 @@ const CategoryForm = () => {
                     console.log(result);
                     toast.success(`Category updated successfully`);
                }
-               router.push("/category");
+               router.push("/categories");
           } catch (err) {
                console.error("Failed to save category:", err);
                toast.error("Failed to save category");

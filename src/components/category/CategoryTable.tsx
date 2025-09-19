@@ -90,7 +90,6 @@ export default function CategoryTable() {
 
      return (
           <div className="w-full pb-6">
-               Search + Filter + Add
                <div className="flex flex-wrap gap-3  items-center justify-between mb-4 w-auto">
                     <Input
                          placeholder="Search categories..."
@@ -128,7 +127,7 @@ export default function CategoryTable() {
                               </SelectContent>
                          </Select>
 
-                         <Button onClick={() => router.push("/category/create")}>
+                         <Button onClick={() => router.push("/categories/create")}>
                               Add Admin
                          </Button>
                     </div>
@@ -183,7 +182,7 @@ export default function CategoryTable() {
                                              <TableCell>
                                                   {/* Edit */}
                                                   <Button
-                                                       onClick={() => router.push(`/category/update/${category.id}`)}
+                                                       onClick={() => router.push(`/categories/update/${category.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -192,7 +191,7 @@ export default function CategoryTable() {
 
                                                   {/* Details */}
                                                   <Button
-                                                       onClick={() => router.push(`/category/details/${category.id}`)}
+                                                       onClick={() => router.push(`/categories/details/${category.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >

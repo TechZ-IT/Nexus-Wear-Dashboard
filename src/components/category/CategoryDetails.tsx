@@ -22,11 +22,15 @@ const CategoryDetails = () => {
           image,
           createdAt,
           updatedAt,
+          subcategory
      } = data;
+
+     console.log(data);
 
      const tableData = [
           { label: "name", value: name },
           { label: "description ", value: description },
+          { label: "total subcategory ", value: subcategory.length },
           { label: "createdAt", value: new Date(createdAt).toLocaleString() },
           { label: "updatedAt", value: new Date(updatedAt).toLocaleString() },
      ]
