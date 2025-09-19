@@ -26,7 +26,6 @@ import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
 // Icons
 import { Pencil, Trash, Eye } from "lucide-react"
 // Types
-import { Admin } from "@/types/category"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 
 
