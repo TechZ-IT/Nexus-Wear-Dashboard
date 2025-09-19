@@ -1,9 +1,9 @@
-import AdminTable from '@/components/admin/AdminTable';
+import CategoryTable from '@/components/category/CategoryTable';
 import React from 'react';
 
 const page = () => {
        return <>
-              <AdminTable />
+              <CategoryTable />
        </>
 
 
