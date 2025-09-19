@@ -46,7 +46,7 @@ export default function AdminTable() {
                setDebouncedSearch(searchTerm)
           }, 500);
           return () => clearTimeout(timeout)
-     },[searchTerm])
+     }, [searchTerm])
 
 
 
