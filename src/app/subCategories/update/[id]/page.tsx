@@ -1,4 +1,4 @@
-import SubCategoryForm from '@/components/subCategory/SubCategoryForm';
+import SubCategoryForm from '@/components/subCategories/SubCategoryForm';
 import React from 'react';
 
 const page = () => {

@@ -1,10 +1,10 @@
-import SubCategoryForm from '@/components/subCategory/SubCategoryForm';
+import SubCategoryDetails from '@/components/subCategories/SubCategoryDetails';
 import React from 'react';
 
 const Page = () => {
      return (
           <div>
-               <SubCategoryForm />
+               <SubCategoryDetails />
           </div>
      );
 };
