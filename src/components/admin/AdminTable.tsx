@@ -151,18 +151,18 @@ export default function AdminTable() {
                </div>
 
                {/* Table */}
-               <div className="overflow-hidden rounded-md border">
+               <div className="overflow-hidden rounded-md border text-center">
                     <Table>
                          <TableHeader>
                               <TableRow>
-                                   <TableHead>#</TableHead>
-                                   <TableHead>Image</TableHead>
-                                   <TableHead>Name</TableHead>
-                                   <TableHead>Email</TableHead>
-                                   <TableHead>Phone</TableHead>
-                                   <TableHead>Role</TableHead>
-                                   <TableHead>Status</TableHead>
-                                   <TableHead>Actions</TableHead>
+                                   <TableHead className="font-extrabold text-center">*</TableHead>
+                                   <TableHead className="font-extrabold ">Image</TableHead>
+                                   <TableHead className="font-extrabold text-center">Name</TableHead>
+                                   <TableHead className="font-extrabold text-center">Email</TableHead>
+                                   <TableHead className="font-extrabold text-center">Phone</TableHead>
+                                   <TableHead className="font-extrabold text-center">Role</TableHead>
+                                   <TableHead className="font-extrabold text-center">Status</TableHead>
+                                   <TableHead className="font-extrabold text-center">Actions</TableHead>
                               </TableRow>
                          </TableHeader>
 
