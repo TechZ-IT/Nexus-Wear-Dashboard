@@ -196,7 +196,7 @@ export default function SubCategoryTable() {
                                              <TableCell>{subCategory.name}</TableCell>
                                              <TableCell>{subCategory.description.slice(0,20)+"....."}</TableCell>
                                              <TableCell>{subCategory.category.name}</TableCell>
-                                             <TableCell>{subCategory.createdAt}</TableCell>
+                                             <TableCell>{subCategory.createdAt.slice(0,10)}</TableCell>
 
                                              {/* Actions */}
                                              <TableCell>
