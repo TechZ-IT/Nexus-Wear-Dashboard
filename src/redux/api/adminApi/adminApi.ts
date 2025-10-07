@@ -36,8 +36,8 @@ export const adminApi = apiSlice.injectEndpoints({
                invalidatesTags: ["Admin"],
           }),
           updateAdminDetails: builder.mutation({
-               query: ({ formData, id }) => ({
-                    url: `/admin/${id}`,
+               query: ({ formData, adminId }) => ({
+                    url: `/admin/${adminId}`,
                     method: "PATCH",
                     body: formData
                }),

@@ -90,10 +90,10 @@ export default function AdminTable() {
 
 
      // Handlers
-     const handleDelete = async (id: string) => {
-          if (id) {
+     const handleDelete = async (adminId: string) => {
+          if (adminId) {
                try {
-                    await deleteAdmin(id).unwrap()
+                    await deleteAdmin(adminId).unwrap()
                     await refetch()
                } catch (error) {
                     console.error("Delete failed", error)
