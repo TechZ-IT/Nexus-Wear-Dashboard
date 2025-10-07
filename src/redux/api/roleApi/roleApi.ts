@@ -28,6 +28,7 @@ export const roleApi = apiSlice.injectEndpoints({
                }),
                invalidatesTags: ["Role"],
           }),
+          
           updateRoleDetails: builder.mutation({
                query: ({ formData, roleId }) => ({
                     url: `/role/${roleId}`,
@@ -40,4 +41,4 @@ export const roleApi = apiSlice.injectEndpoints({
 })
 
 
-export const { useGetALLRoleQuery } = roleApi
+export const { useGetALLRoleQuery, useGetRoleByIdQuery, useDeleteRoleMutation, useCreateRoleMutation, useUpdateRoleDetailsMutation, } = roleApi
