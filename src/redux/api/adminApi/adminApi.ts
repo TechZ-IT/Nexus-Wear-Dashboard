@@ -4,14 +4,9 @@ export const adminApi = apiSlice.injectEndpoints({
      endpoints: (builder) => ({
           // adminApi.ts
           getAllAdmins: builder.query({
-               query: ({ page, limit, search, status }) => ({
+               query: (params?: { page?: number; limit?: number; search?: string; status?: string }) => ({
                     url: `/admin`,
-                    params: {
-                         page,
-                         limit,
-                         search,
-                         status,
-                    },
+                    params,
                }),
                providesTags: ["Admin"],
           }),
