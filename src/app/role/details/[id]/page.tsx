@@ -1,12 +1,11 @@
 
-
-import AdminDetails from '@/components/admin/AdminDetails';
+import RoleDetails from '@/components/role/RoleDetails';
 import React from 'react';
 
 const Page = () => {
      return (
           <div>
-               <AdminDetails  />
+               <RoleDetails  />
           </div>
      );
 };

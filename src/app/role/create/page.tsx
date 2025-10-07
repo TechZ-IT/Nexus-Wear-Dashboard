@@ -1,10 +1,10 @@
-import AdminForm from '@/components/admin/AdminForm';
+import RoleForm from '@/components/role/RoleForm';
 import React from 'react';
 
 const Page = () => {
      return (
           <div>
-               <AdminForm />
+               <RoleForm />
           </div>
      );
 };
