@@ -9,28 +9,28 @@ export const roleApi = apiSlice.injectEndpoints({
                providesTags: ["Role"],
           }),
 
-          getCategoryById: builder.query({
-               query: (categoryId) => `/category/${categoryId}`
+          getRoleById: builder.query({
+               query: (roleId) => `/role/${roleId}`
           }),
 
-          deleteCategory: builder.mutation({
-               query: (categoryId) => ({
-                    url: `/category/${categoryId}`,
+          deleteRole: builder.mutation({
+               query: (roleId) => ({
+                    url: `/role/${roleId}`,
                     method: "DELETE",
                })
           }),
 
-          createCategory: builder.mutation({
+          createRole: builder.mutation({
                query: (formData: FormData) => ({
-                    url: '/category',
+                    url: '/role',
                     method: "POST",
                     body: formData
                }),
                invalidatesTags: ["Role"],
           }),
-          updateCategoryDetails: builder.mutation({
-               query: ({ formData, categoryId }) => ({
-                    url: `/category/${categoryId}`,
+          updateRoleDetails: builder.mutation({
+               query: ({ formData, roleId }) => ({
+                    url: `/role/${roleId}`,
                     method: "PATCH",
                     body: formData
                }),
