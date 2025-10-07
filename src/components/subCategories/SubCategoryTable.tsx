@@ -55,7 +55,7 @@ export default function SubCategoryTable() {
      const router = useRouter()
 
      // API calls
-     const { data, isLoading, refetch } = useGetAllSubCategoriesQuery({
+     const { data, isLoading } = useGetAllSubCategoriesQuery({
           page: currentPage,
           limit: itemsPerPage,
           search: debouncedSearch,
@@ -74,29 +74,13 @@ export default function SubCategoryTable() {
 
 
 
-     // Filtering
-     // const filteredAdmins = subCategories.filter((subCategory) => {
-     //      const matchesSearch =
-     //           subCategory.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     //           subCategory.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     //           subCategory.phone.includes(searchTerm) ||
-     //           subCategory.role.name.toLowerCase().includes(searchTerm.toLowerCase())
-
-     //      const matchesStatus =
-     //           statusFilter === "all" ? true : subCategory.status === statusFilter
-
-     //      return matchesSearch && matchesStatus
-     // })
-
-
 
 
      // Handlers
      const handleDelete = async (subCategoryId: string) => {
           if (subCategoryId) {
                try {
-                    await deleteSubCategory(subCategoryId).unwrap()
-                    await refetch()
+                    await deleteSubCategory(subCategoryId)
                } catch (error) {
                     console.error("Delete failed", error)
                }

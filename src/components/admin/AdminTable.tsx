@@ -53,7 +53,7 @@ export default function AdminTable() {
      const router = useRouter()
 
      // API calls
-     const { data, isLoading, refetch } = useGetAllAdminsQuery({
+     const { data, isLoading } = useGetAllAdminsQuery({
           page: currentPage,
           limit: itemsPerPage,
           search: debouncedSearch,
@@ -93,8 +93,7 @@ export default function AdminTable() {
      const handleDelete = async (adminId: string) => {
           if (adminId) {
                try {
-                    await deleteAdmin(adminId).unwrap()
-                    await refetch()
+                    await deleteAdmin(adminId)
                } catch (error) {
                     console.error("Delete failed", error)
                }

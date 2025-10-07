@@ -53,7 +53,7 @@ export default function RoleTable() {
      const router = useRouter()
 
      // API calls
-     const { data, isLoading, refetch } = useGetAllAdminsQuery({
+     const { data, isLoading } = useGetAllAdminsQuery({
           page: currentPage,
           limit: itemsPerPage,
           search: debouncedSearch,
@@ -74,11 +74,10 @@ export default function RoleTable() {
 
 
      // Handlers
-     const handleDelete = async (id: string) => {
-          if (id) {
+     const handleDelete = async (roleId: string) => {
+          if (roleId) {
                try {
-                    await deleteAdmin(id).unwrap()
-                    await refetch()
+                    await deleteAdmin(roleId)
                } catch (error) {
                     console.error("Delete failed", error)
                }

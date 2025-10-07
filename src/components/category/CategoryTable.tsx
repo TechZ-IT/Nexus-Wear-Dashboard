@@ -55,7 +55,7 @@ export default function CategoryTable() {
      const router = useRouter()
 
      // API calls
-     const { data, isLoading, refetch } = useGetAllCategoriesQuery({
+     const { data, isLoading } = useGetAllCategoriesQuery({
           page: currentPage,
           limit: itemsPerPage,
           search: debouncedSearch,
@@ -77,8 +77,7 @@ export default function CategoryTable() {
      const handleDelete = async (categoryId: string) => {
           if (categoryId) {
                try {
-                    await deleteCategory(categoryId).unwrap()
-                    await refetch()
+                    await deleteCategory(categoryId)
                } catch (error) {
                     console.error("Delete failed", error)
                }
