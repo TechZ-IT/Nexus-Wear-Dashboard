@@ -20,15 +20,15 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
      // console.log(pathname)
      const formattedPathname = pathname.slice(1).replace(/^./, c => c.toUpperCase());
      const router = useRouter();
-     const { token } = useAppSelector((state) => state.auth);
+     const { token, _persist } = useAppSelector((state) => state.auth);
 
      const hideSidebar = pathname === "/signin";
 
      useEffect(() => {
-          if (!token && pathname !== "/signin") {
+          if (_persist?.rehydrated && !token && pathname !== "/signin") {
                router.replace("/signin");
           }
-     }, [token, pathname, router]);
+     }, [_persist?.rehydrated, token, pathname, router]);
 
      if (!token && pathname !== "/signin") {
           return null;
