@@ -72,22 +72,6 @@ export default function RoleTable() {
 
 
 
-     // Filtering
-     // const filteredAdmins = admins.filter((admin) => {
-     //      const matchesSearch =
-     //           admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     //           admin.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     //           admin.phone.includes(searchTerm) ||
-     //           admin.role.name.toLowerCase().includes(searchTerm.toLowerCase())
-
-     //      const matchesStatus =
-     //           statusFilter === "all" ? true : admin.status === statusFilter
-
-     //      return matchesSearch && matchesStatus
-     // })
-
-
-
 
      // Handlers
      const handleDelete = async (id: string) => {
@@ -144,8 +128,8 @@ export default function RoleTable() {
                               </SelectContent>
                          </Select>
 
-                         <Button onClick={() => router.push("/admin/create")}>
-                              Add Admin
+                         <Button onClick={() => router.push("/role/create")}>
+                              Add Role
                          </Button>
                     </div>
                </div>
@@ -156,12 +140,9 @@ export default function RoleTable() {
                          <TableHeader>
                               <TableRow>
                                    <TableHead className="font-extrabold text-center">*</TableHead>
-                                   <TableHead className="font-extrabold ">Image</TableHead>
-                                   <TableHead className="font-extrabold text-center">Name</TableHead>
-                                   <TableHead className="font-extrabold text-center">Email</TableHead>
-                                   <TableHead className="font-extrabold text-center">Phone</TableHead>
-                                   <TableHead className="font-extrabold text-center">Role</TableHead>
-                                   <TableHead className="font-extrabold text-center">Status</TableHead>
+                                   <TableHead className="font-extrabold text-center">Role Name</TableHead>
+                                   <TableHead className="font-extrabold text-center">Description</TableHead>
+                                   <TableHead className="font-extrabold text-center">CreatedAt</TableHead>
                                    <TableHead className="font-extrabold text-center">Actions</TableHead>
                               </TableRow>
                          </TableHeader>
@@ -180,39 +161,15 @@ export default function RoleTable() {
                                                   {(currentPage - 1) * itemsPerPage + idx + 1}
                                              </TableCell>
 
-                                             <TableCell>
-                                                  <Image
-                                                       src={admin.image ?? "/profileImg.jpg"}
-                                                       alt="images"
-                                                       width={50}
-                                                       height={50}
-                                                       quality={75}
-                                                       className="h-12 w-12 object-contain"
-                                                       draggable={false}
-                                                  />
-                                             </TableCell>
-
                                              <TableCell>{admin.name}</TableCell>
-                                             <TableCell>{admin.email}</TableCell>
-                                             <TableCell>{admin.phone}</TableCell>
-                                             <TableCell>{admin.role.name}</TableCell>
-
-                                             <TableCell>
-                                                  <span
-                                                       className={`px-2 py-1 text-xs font-semibold rounded-full ${admin.status === "active"
-                                                            ? "bg-green-100 text-green-800"
-                                                            : "bg-red-100 text-red-800"
-                                                            }`}
-                                                  >
-                                                       {admin.status}
-                                                  </span>
-                                             </TableCell>
+                                             <TableCell>{admin.description}</TableCell>
+                                             <TableCell>{admin.createdAt}</TableCell>
 
                                              {/* Actions */}
                                              <TableCell>
                                                   {/* Edit */}
                                                   <Button
-                                                       onClick={() => router.push(`/admin/update/${admin.id}`)}
+                                                       onClick={() => router.push(`/role/update/${admin.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -221,7 +178,7 @@ export default function RoleTable() {
 
                                                   {/* Details */}
                                                   <Button
-                                                       onClick={() => router.push(`/admin/details/${admin.id}`)}
+                                                       onClick={() => router.push(`/role/details/${admin.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
