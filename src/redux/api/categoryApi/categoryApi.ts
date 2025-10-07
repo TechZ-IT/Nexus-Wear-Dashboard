@@ -5,17 +5,13 @@ export const categoryApi = apiSlice.injectEndpoints({
      endpoints: (builder) => ({
           // categoryApi.ts
           getAllCategories: builder.query({
-               query: ({ page, limit, search, status }) => ({
+               query: (params?: { page?: number; limit?: number; search?: string; status?: string }) => ({
                     url: `/category`,
-                    params: {
-                         page,
-                         limit,
-                         search,
-                         status,
-                    },
+                    params,
                }),
                providesTags: ["Category"],
           }),
+
 
           getCategoryById: builder.query({
                query: (categoryId) => `/category/${categoryId}`

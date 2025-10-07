@@ -45,7 +45,7 @@ const data = {
   catalog: [
     { name: "Categories", url: "/categories", icon: Folder },
     { name: "Add Category", url: "/categories/create", icon: PlusCircle },
-    { name: "Subcategories", url: "/subcategories", icon: Layers },
+    { name: "Subcategories", url: "/subCategories", icon: Layers },
     { name: "Add Subcategory", url: "/subcategories/create", icon: PlusCircle },
     { name: "Colors", url: "/colors", icon: Palette },
     { name: "Sizes", url: "/sizes", icon: Ruler },

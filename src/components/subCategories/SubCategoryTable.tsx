@@ -27,11 +27,13 @@ import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
 // Icons
 import { Pencil, Trash, Eye } from "lucide-react"
 // Types
-import { Admin } from "@/types/admin"
+import { Admin } from "@/types/subCategory"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { useDeleteSubCategoryMutation, useGetAllSubCategoriesQuery } from "@/redux/api/subCategoryApi/subCategoryApi"
+import { Subcategory } from "@/types/categoryAndSubcategory"
 
 
-export default function AdminTable() {
+export default function SubCategoryTable() {
      // State
      const [currentPage, setCurrentPage] = useState(1)
      const [itemsPerPage, setItemsPerPage] = useState(10)
@@ -53,35 +55,35 @@ export default function AdminTable() {
      const router = useRouter()
 
      // API calls
-     const { data, isLoading, refetch } = useGetAllAdminsQuery({
+     const { data, isLoading, refetch } = useGetAllSubCategoriesQuery({
           page: currentPage,
           limit: itemsPerPage,
           search: debouncedSearch,
           status: statusFilter === "all" ? undefined : statusFilter,
      })
 
-     const [deleteAdmin, { isLoading: isDeleting }] = useDeleteAdminMutation()
+     const [deleteSubCategory, { isLoading: isDeleting }] = useDeleteSubCategoryMutation()
 
 
 
      // Data
-     const admins: Admin[] = data?.data || []
+     const subCategories: Subcategory[] = data?.data || []
      const total = data?.total || 0
      const totalPages = Math.ceil(total / itemsPerPage)
-     // console.log(admins);
+     console.log(subCategories);
 
 
 
      // Filtering
-     // const filteredAdmins = admins.filter((admin) => {
+     // const filteredAdmins = subCategories.filter((subCategory) => {
      //      const matchesSearch =
-     //           admin.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     //           admin.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-     //           admin.phone.includes(searchTerm) ||
-     //           admin.role.name.toLowerCase().includes(searchTerm.toLowerCase())
+     //           subCategory.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     //           subCategory.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     //           subCategory.phone.includes(searchTerm) ||
+     //           subCategory.role.name.toLowerCase().includes(searchTerm.toLowerCase())
 
      //      const matchesStatus =
-     //           statusFilter === "all" ? true : admin.status === statusFilter
+     //           statusFilter === "all" ? true : subCategory.status === statusFilter
 
      //      return matchesSearch && matchesStatus
      // })
@@ -90,10 +92,10 @@ export default function AdminTable() {
 
 
      // Handlers
-     const handleDelete = async (id: string) => {
-          if (id) {
+     const handleDelete = async (subCategoryId: string) => {
+          if (subCategoryId) {
                try {
-                    await deleteAdmin(id).unwrap()
+                    await deleteSubCategory(subCategoryId).unwrap()
                     await refetch()
                } catch (error) {
                     console.error("Delete failed", error)
@@ -109,7 +111,7 @@ export default function AdminTable() {
                {/* Search + Filter + Add */}
                <div className="flex flex-wrap gap-3  items-center justify-between mb-4 w-auto">
                     <Input
-                         placeholder="Search admins..."
+                         placeholder="Search subCategories..."
                          value={searchTerm}
                          onChange={(e) => setSearchTerm(e.target.value)}
                          className="w-full md:max-w-sm"
@@ -144,7 +146,7 @@ export default function AdminTable() {
                               </SelectContent>
                          </Select>
 
-                         <Button onClick={() => router.push("/admin/create")}>
+                         <Button onClick={() => router.push("/subCategory/create")}>
                               Add Admin
                          </Button>
                     </div>
@@ -155,13 +157,12 @@ export default function AdminTable() {
                     <Table>
                          <TableHeader>
                               <TableRow>
-                                   <TableHead className="font-extrabold text-center">*</TableHead>
+                                   <TableHead className="font-extrabold text-center">#</TableHead>
                                    <TableHead className="font-extrabold ">Image</TableHead>
-                                   <TableHead className="font-extrabold text-center">Name</TableHead>
-                                   <TableHead className="font-extrabold text-center">Email</TableHead>
-                                   <TableHead className="font-extrabold text-center">Phone</TableHead>
-                                   <TableHead className="font-extrabold text-center">Role</TableHead>
-                                   <TableHead className="font-extrabold text-center">Status</TableHead>
+                                   <TableHead className="font-extrabold text-center">Sub Category Name</TableHead>
+                                   <TableHead className="font-extrabold text-center">Description</TableHead>
+                                   <TableHead className="font-extrabold text-center">Category Name</TableHead>
+                                   <TableHead className="font-extrabold text-center">Created At</TableHead>
                                    <TableHead className="font-extrabold text-center">Actions</TableHead>
                               </TableRow>
                          </TableHeader>
@@ -173,16 +174,16 @@ export default function AdminTable() {
                                              Loading...
                                         </TableCell>
                                    </TableRow>
-                              ) : admins.length ? (
-                                   admins.map((admin, idx) => (
-                                        <TableRow key={admin.id}>
+                              ) : subCategories.length ? (
+                                   subCategories.map((subCategory, idx) => (
+                                        <TableRow key={subCategory.id}>
                                              <TableCell>
                                                   {(currentPage - 1) * itemsPerPage + idx + 1}
                                              </TableCell>
 
                                              <TableCell>
                                                   <Image
-                                                       src={admin.image ?? "/profileImg.jpg"}
+                                                       src={subCategory?.image ?? "/profileImg.jpg"}
                                                        alt="images"
                                                        width={50}
                                                        height={50}
@@ -192,27 +193,16 @@ export default function AdminTable() {
                                                   />
                                              </TableCell>
 
-                                             <TableCell>{admin.name}</TableCell>
-                                             <TableCell>{admin.email}</TableCell>
-                                             <TableCell>{admin.phone}</TableCell>
-                                             <TableCell>{admin.role.name}</TableCell>
-
-                                             <TableCell>
-                                                  <span
-                                                       className={`px-2 py-1 text-xs font-semibold rounded-full ${admin.status === "active"
-                                                            ? "bg-green-100 text-green-800"
-                                                            : "bg-red-100 text-red-800"
-                                                            }`}
-                                                  >
-                                                       {admin.status}
-                                                  </span>
-                                             </TableCell>
+                                             <TableCell>{subCategory.name}</TableCell>
+                                             <TableCell>{subCategory.description.slice(0,20)+"....."}</TableCell>
+                                             <TableCell>{subCategory.category.name}</TableCell>
+                                             <TableCell>{subCategory.createdAt.slice(0,10)}</TableCell>
 
                                              {/* Actions */}
                                              <TableCell>
                                                   {/* Edit */}
                                                   <Button
-                                                       onClick={() => router.push(`/admin/update/${admin.id}`)}
+                                                       onClick={() => router.push(`/subCategories/update/${subCategory.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -221,7 +211,7 @@ export default function AdminTable() {
 
                                                   {/* Details */}
                                                   <Button
-                                                       onClick={() => router.push(`/admin/details/${admin.id}`)}
+                                                       onClick={() => router.push(`/subCategories/details/${subCategory.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -252,7 +242,7 @@ export default function AdminTable() {
                                                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
                                                                  <AlertDialogAction
                                                                       disabled={isDeleting}
-                                                                      onClick={() => handleDelete(admin?.id)}
+                                                                      onClick={() => handleDelete(subCategory?.id)}
                                                                       className="bg-red-600 font-extrabold"
                                                                  >
                                                                       Continue
