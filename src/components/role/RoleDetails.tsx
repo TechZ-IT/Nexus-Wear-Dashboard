@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '../ui/card';
 import Image from 'next/image';
 
-const AdminDetails = () => {
+const RoleDetails = () => {
      const { id } = useParams();
      const { data, isLoading, isError } = useGetAdminByIdQuery(id);
      const router = useRouter();
@@ -82,4 +82,4 @@ const AdminDetails = () => {
      );
 };
 
-export default AdminDetails;
+export default RoleDetails;
