@@ -3,10 +3,9 @@
 import * as React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Image from "next/image"
 
 // Redux
-import { useDeleteAdminMutation, useGetAllAdminsQuery } from "@/redux/api/adminApi/adminApi"
+import { useDeleteAdminMutation } from "@/redux/api/adminApi/adminApi"
 
 // UI Components
 import { Button } from "@/components/ui/button"
@@ -29,6 +28,7 @@ import { Pencil, Trash, Eye } from "lucide-react"
 // Types
 import { Admin } from "@/types/admin"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { useGetAllRolesQuery } from "@/redux/api/roleApi/roleApi"
 
 
 export default function RoleTable() {
@@ -53,7 +53,7 @@ export default function RoleTable() {
      const router = useRouter()
 
      // API calls
-     const { data, isLoading } = useGetAllAdminsQuery({
+     const { data, isLoading } = useGetAllRolesQuery({
           page: currentPage,
           limit: itemsPerPage,
           search: debouncedSearch,

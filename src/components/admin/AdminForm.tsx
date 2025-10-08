@@ -12,7 +12,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 // Redux API
-import { useGetALLRoleQuery } from "@/redux/api/roleApi/roleApi";
+import { useGetAllRolesQuery } from "@/redux/api/roleApi/roleApi";
 import {
      useCreateAdminMutation,
      useGetAdminByIdQuery,
@@ -34,7 +34,7 @@ const AdminForm = () => {
      const formattedText = pathname.split("/")[2];
 
      /* ---------------------- API Calls ---------------------- */
-     const { data: roleData } = useGetALLRoleQuery();
+     const { data: roleData } = useGetAllRolesQuery(undefined);
      const { data: admin } = useGetAdminByIdQuery(id);
      const [createAdmin] = useCreateAdminMutation();
      const [updateAdminDetails] = useUpdateAdminDetailsMutation();

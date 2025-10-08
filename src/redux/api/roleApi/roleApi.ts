@@ -1,11 +1,13 @@
-import { Role } from "@/types/role";
 import { apiSlice } from "../apiSlice";
 
 
 export const roleApi = apiSlice.injectEndpoints({
      endpoints: (builder) => ({
-          getALLRole: builder.query<Role[], void>({
-               query: () => `/role`,
+          getAllRoles: builder.query({
+               query: (params?: { page?: number; limit?: number; search?: string; status?: string }) => ({
+                    url: `/role`,
+                    params,
+               }),
                providesTags: ["Role"],
           }),
 
@@ -41,4 +43,5 @@ export const roleApi = apiSlice.injectEndpoints({
 })
 
 
-export const { useGetALLRoleQuery, useGetRoleByIdQuery, useDeleteRoleMutation, useCreateRoleMutation, useUpdateRoleDetailsMutation, } = roleApi
+export const { useGetAllRolesQuery, useGetRoleByIdQuery, useDeleteRoleMutation, useCreateRoleMutation, useUpdateRoleDetailsMutation, } = roleApi
+
