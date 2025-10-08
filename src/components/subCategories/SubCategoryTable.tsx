@@ -26,8 +26,7 @@ import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
 
 // Icons
 import { Pencil, Trash, Eye } from "lucide-react"
-// Types
-import { Admin } from "@/types/subCategory"
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { useDeleteSubCategoryMutation, useGetAllSubCategoriesQuery } from "@/redux/api/subCategoryApi/subCategoryApi"
 import { Subcategory } from "@/types/categoryAndSubcategory"
