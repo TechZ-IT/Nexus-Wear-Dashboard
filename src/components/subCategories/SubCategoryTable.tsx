@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 
 // Redux
-import { useDeleteAdminMutation, useGetAllAdminsQuery } from "@/redux/api/adminApi/adminApi"
 
 // UI Components
 import { Button } from "@/components/ui/button"
@@ -24,12 +23,16 @@ import {
 } from "@/components/ui/alert-dialog"
 import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
 
+
+
 // Icons
 import { Pencil, Trash, Eye } from "lucide-react"
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { useDeleteSubCategoryMutation, useGetAllSubCategoriesQuery } from "@/redux/api/subCategoryApi/subCategoryApi"
 import { Subcategory } from "@/types/categoryAndSubcategory"
+
+
 
 
 export default function SubCategoryTable() {
