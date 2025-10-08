@@ -62,7 +62,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                               {children}
                          </main>
                               :
-                              <div className="w-full px-4">
+                              <div className="w-full ">
                                    {children}
                               </div>
                     }
