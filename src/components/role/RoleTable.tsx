@@ -5,7 +5,6 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 // Redux
-import { useDeleteAdminMutation } from "@/redux/api/adminApi/adminApi"
 
 // UI Components
 import { Button } from "@/components/ui/button"
@@ -26,9 +25,9 @@ import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
 // Icons
 import { Pencil, Trash, Eye } from "lucide-react"
 // Types
-import { Admin } from "@/types/admin"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { useGetAllRolesQuery } from "@/redux/api/roleApi/roleApi"
+import { useDeleteRoleMutation, useGetAllRolesQuery } from "@/redux/api/roleApi/roleApi"
+import { Role } from "@/types/role"
 
 
 export default function RoleTable() {
@@ -53,6 +52,7 @@ export default function RoleTable() {
      const router = useRouter()
 
      // API calls
+     // const { data, isLoading } = useGetAllRolesQuery(undefined)
      const { data, isLoading } = useGetAllRolesQuery({
           page: currentPage,
           limit: itemsPerPage,
@@ -60,15 +60,15 @@ export default function RoleTable() {
           status: statusFilter === "all" ? undefined : statusFilter,
      })
 
-     const [deleteAdmin, { isLoading: isDeleting }] = useDeleteAdminMutation()
+     const [deleteRole, { isLoading: isDeleting }] = useDeleteRoleMutation()
 
 
 
      // Data
-     const admins: Admin[] = data?.data || []
+     const roles: Role[] = data || []
      const total = data?.total || 0
      const totalPages = Math.ceil(total / itemsPerPage)
-     // console.log(admins);
+     console.log(data);
 
 
 
@@ -77,7 +77,7 @@ export default function RoleTable() {
      const handleDelete = async (roleId: string) => {
           if (roleId) {
                try {
-                    await deleteAdmin(roleId)
+                    await deleteRole(roleId)
                } catch (error) {
                     console.error("Delete failed", error)
                }
@@ -120,10 +120,9 @@ export default function RoleTable() {
                               </SelectTrigger>
                               <SelectContent>
                                    <SelectItem value="all">All</SelectItem>
-                                   <SelectItem value="active">Active</SelectItem>
-                                   <SelectItem value="inactive">Inactive</SelectItem>
-                                   <SelectItem value="pending">Pending</SelectItem>
-                                   <SelectItem value="deleted">Deleted</SelectItem>
+                                   {
+                                        roles.map(role => <SelectItem key={role?.id} value={role.name}>{role.name}</SelectItem>)
+                                   }
                               </SelectContent>
                          </Select>
 
@@ -153,22 +152,22 @@ export default function RoleTable() {
                                              Loading...
                                         </TableCell>
                                    </TableRow>
-                              ) : admins.length ? (
-                                   admins.map((admin, idx) => (
-                                        <TableRow key={admin.id}>
+                              ) : roles.length ? (
+                                   roles.map((role, idx) => (
+                                        <TableRow key={role.id}>
                                              <TableCell>
                                                   {(currentPage - 1) * itemsPerPage + idx + 1}
                                              </TableCell>
 
-                                             <TableCell>{admin.name}</TableCell>
-                                             <TableCell>{admin.description}</TableCell>
-                                             <TableCell>{admin.createdAt}</TableCell>
+                                             <TableCell>{role.name}</TableCell>
+                                             <TableCell>{role.description.slice(0, 40) + "....."}</TableCell>
+                                             <TableCell>{role.createdAt.slice(0,10)}</TableCell>
 
                                              {/* Actions */}
                                              <TableCell>
                                                   {/* Edit */}
                                                   <Button
-                                                       onClick={() => router.push(`/role/update/${admin.id}`)}
+                                                       onClick={() => router.push(`/role/update/${role.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -177,7 +176,7 @@ export default function RoleTable() {
 
                                                   {/* Details */}
                                                   <Button
-                                                       onClick={() => router.push(`/role/details/${admin.id}`)}
+                                                       onClick={() => router.push(`/role/details/${role.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -208,7 +207,7 @@ export default function RoleTable() {
                                                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
                                                                  <AlertDialogAction
                                                                       disabled={isDeleting}
-                                                                      onClick={() => handleDelete(admin?.id)}
+                                                                      onClick={() => handleDelete(role?.id)}
                                                                       className="bg-red-600 font-extrabold"
                                                                  >
                                                                       Continue
