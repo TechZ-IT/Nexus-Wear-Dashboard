@@ -3,7 +3,6 @@ import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '../ui/card';
-import Image from 'next/image';
 import { useGetRoleByIdQuery } from '@/redux/api/roleApi/roleApi';
 
 const RoleDetails = () => {
