@@ -11,8 +11,8 @@ const RoleDetails = () => {
      const router = useRouter();
 
      if (isLoading) return <p className="text-center py-10">Loading...</p>;
-     if (isError) return <p className="text-center py-10 text-red-500">Failed to load admin details.</p>;
-     if (!data) return <p className="text-center py-10">No admin found</p>;
+     if (isError) return <p className="text-center py-10 text-red-500">Failed to load role details.</p>;
+     if (!data) return <p className="text-center py-10">No roles found</p>;
 
      const {
           name,

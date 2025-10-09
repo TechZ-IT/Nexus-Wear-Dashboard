@@ -92,7 +92,7 @@ export default function RoleTable() {
                {/* Search + Filter + Add */}
                <div className="flex flex-wrap gap-3  items-center justify-between mb-4 w-auto">
                     <Input
-                         placeholder="Search admins..."
+                         placeholder="Search roles..."
                          value={searchTerm}
                          onChange={(e) => setSearchTerm(e.target.value)}
                          className="w-full md:max-w-sm"
