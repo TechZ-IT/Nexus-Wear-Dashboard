@@ -18,7 +18,7 @@ import { Role } from "@/types/role";
 
 const RoleForm = () => {
 
-     const { id } = useParams();
+     const { id }: { id: string } = useParams();
      const router = useRouter();
      const pathname = usePathname();
      const formattedText = pathname.split("/")[2];
@@ -50,18 +50,21 @@ const RoleForm = () => {
 
      /* ---------------------- Submit Handler ---------------------- */
      const onSubmit: SubmitHandler<Role> = async (data) => {
-          const formData = new FormData();
 
-          formData.append("name", data.name);
-          formData.append("email", data.description);
+          const roleData = {
+               name: data.name,
+               description: data.description,
+          }
 
           try {
                if (formattedText === "create") {
-                    await createRole(formData).unwrap();
+                    await createRole(roleData).unwrap();
                     toast.success(`role created successfully`);
                } else {
-                    await updateRoleDetails({ formData, roleId: id }).unwrap();
-                    toast.success(`role updated successfully`);
+                    if (id) {
+                         await updateRoleDetails({ roleId: id, ...roleData }).unwrap();
+                         toast.success(`role updated successfully`);
+                    }
                }
                router.push("/role");
           } catch (err) {

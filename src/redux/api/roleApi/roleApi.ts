@@ -19,26 +19,34 @@ export const roleApi = apiSlice.injectEndpoints({
                query: (roleId) => ({
                     url: `/role/${roleId}`,
                     method: "DELETE",
-               })
-          }),
-
-          createRole: builder.mutation({
-               query: (formData: FormData) => ({
-                    url: '/role',
-                    method: "POST",
-                    body: formData
-               }),
-               invalidatesTags: ["Role"],
-          }),
-          
-          updateRoleDetails: builder.mutation({
-               query: ({ formData, roleId }) => ({
-                    url: `/role/${roleId}`,
-                    method: "PATCH",
-                    body: formData
                }),
                invalidatesTags: ["Role"]
           }),
+
+          createRole: builder.mutation({
+               query: (data: { name: string; description: string }) => ({
+                    url: '/role',
+                    method: 'POST',
+                    headers: {
+                         'Content-Type': 'application/json',
+                    },
+                    body: data,
+               }),
+               invalidatesTags: ['Role'],
+          }),
+
+          updateRoleDetails: builder.mutation({
+               query: ({ roleId, ...data }: { roleId: string; name: string; description: string }) => ({
+                    url: `/role/${roleId}`,
+                    method: 'PATCH',
+                    headers: {
+                         'Content-Type': 'application/json',
+                    },
+                    body: data,
+               }),
+               invalidatesTags: ['Role'],
+          }),
+
      })
 })
 

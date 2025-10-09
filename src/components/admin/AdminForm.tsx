@@ -50,6 +50,7 @@ const AdminForm = () => {
           reset,
      } = useForm<Admin>();
 
+     
      useEffect(() => {
           if (adminInfo && formattedText === "update") {
                reset({
@@ -64,6 +65,7 @@ const AdminForm = () => {
                });
           }
      }, [adminInfo, reset, formattedText]);
+
 
 
      /* ---------------------- Submit Handler ---------------------- */
