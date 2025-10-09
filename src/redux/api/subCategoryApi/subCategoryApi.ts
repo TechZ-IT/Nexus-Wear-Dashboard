@@ -20,9 +20,12 @@ export const subCategoryApi = apiSlice.injectEndpoints({
                query: (subCategoryId) => ({
                     url: `/subcategory/${subCategoryId}`,
                     method: "DELETE",
-               })
+               }),
+               invalidatesTags: ["SubCategory"],
           }),
 
+
+          
           createSubCategory: builder.mutation({
                query: (formData: FormData) => ({
                     url: '/subcategory',

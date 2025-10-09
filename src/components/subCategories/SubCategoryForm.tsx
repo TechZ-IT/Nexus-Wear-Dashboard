@@ -75,10 +75,10 @@ const SubCategoryForm = () => {
 
           try {
                if (formattedText === "create") {
-                     await createSubCategory(formData).unwrap();
+                    await createSubCategory(formData).unwrap();
                     toast.success(`SubCategory created successfully`);
                } else {
-                    const result = await updateSubCategoryDetails({ formData, subCategoryId:id }).unwrap();
+                    const result = await updateSubCategoryDetails({ formData, subCategoryId: id }).unwrap();
                     console.log(result);
                     toast.success(`SubCategory updated successfully`);
                }
@@ -137,7 +137,7 @@ const SubCategoryForm = () => {
 
 
 
- 
+
 
 
                          {/* Role */}

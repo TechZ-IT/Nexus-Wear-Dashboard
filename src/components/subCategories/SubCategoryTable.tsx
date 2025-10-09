@@ -31,6 +31,7 @@ import { Pencil, Trash, Eye } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { useDeleteSubCategoryMutation, useGetAllSubCategoriesQuery } from "@/redux/api/subCategoryApi/subCategoryApi"
 import { Subcategory } from "@/types/categoryAndSubcategory"
+import toast from "react-hot-toast"
 
 
 
@@ -80,11 +81,13 @@ export default function SubCategoryTable() {
 
      // Handlers
      const handleDelete = async (subCategoryId: string) => {
+          // console.log(subCategoryId);
           if (subCategoryId) {
                try {
                     await deleteSubCategory(subCategoryId)
                } catch (error) {
                     console.error("Delete failed", error)
+                    toast.error("delete failed")
                }
           }
      }
@@ -120,7 +123,7 @@ export default function SubCategoryTable() {
                          </Select>
 
                          <Select value={statusFilter} onValueChange={setStatusFilter}>
-                              <SelectTrigger className="">
+                              <SelectTrigger>
                                    <SelectValue placeholder="Select status" />
                               </SelectTrigger>
                               <SelectContent>
@@ -132,11 +135,12 @@ export default function SubCategoryTable() {
                               </SelectContent>
                          </Select>
 
-                         <Button onClick={() => router.push("/subCategory/create")}>
-                              Add Admin
+                         <Button onClick={() => router.push("/subCategories/create")}>
+                              Add subCategory
                          </Button>
                     </div>
                </div>
+
 
                {/* Table */}
                <div className="overflow-hidden rounded-md border text-center">
@@ -180,9 +184,9 @@ export default function SubCategoryTable() {
                                              </TableCell>
 
                                              <TableCell>{subCategory.name}</TableCell>
-                                             <TableCell>{subCategory.description.slice(0,20)+"....."}</TableCell>
+                                             <TableCell>{subCategory.description.slice(0, 20) + "....."}</TableCell>
                                              <TableCell>{subCategory.category.name}</TableCell>
-                                             <TableCell>{subCategory.createdAt.slice(0,10)}</TableCell>
+                                             <TableCell>{subCategory.createdAt.slice(0, 10)}</TableCell>
 
                                              {/* Actions */}
                                              <TableCell>
