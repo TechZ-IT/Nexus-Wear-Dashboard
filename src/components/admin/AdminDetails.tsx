@@ -10,6 +10,7 @@ import Image from 'next/image';
 const AdminDetails = () => {
      const { id } = useParams();
      const { data, isLoading, isError } = useGetAdminByIdQuery(id);
+     console.log(isError);
      const router = useRouter();
 
      if (isLoading) return <p className="text-center py-10">Loading...</p>;

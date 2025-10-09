@@ -5,14 +5,9 @@ export const subCategoryApi = apiSlice.injectEndpoints({
      endpoints: (builder) => ({
           // subCategoryApi.ts
           getAllSubCategories: builder.query({
-               query: ({ page, limit, search, status }) => ({
+               query: (params?: { page?: number; limit?: number; search?: string; status?: string }) => ({
                     url: `/subcategory`,
-                    params: {
-                         page,
-                         limit,
-                         search,
-                         status,
-                    },
+                    params,
                }),
                providesTags: ["SubCategory"],
           }),
@@ -25,9 +20,12 @@ export const subCategoryApi = apiSlice.injectEndpoints({
                query: (subCategoryId) => ({
                     url: `/subcategory/${subCategoryId}`,
                     method: "DELETE",
-               })
+               }),
+               invalidatesTags: ["SubCategory"],
           }),
 
+
+          
           createSubCategory: builder.mutation({
                query: (formData: FormData) => ({
                     url: '/subcategory',
