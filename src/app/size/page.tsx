@@ -1,10 +1,10 @@
 
-import ColorTable from '@/components/color/ColorTable';
+import SizeTable from '@/components/size/SizeTable';
 import React from 'react';
 
 const page = () => {
        return <>
-              <ColorTable />
+              <SizeTable />
        </>
 
 

@@ -7,7 +7,7 @@ import { Card } from '../ui/card';
 import Image from 'next/image';
 import { useGetColorByIdQuery } from '@/redux/api/colorApi/colorApi';
 
-const ColorDetails = () => {
+const SizeDetails = () => {
      const { id } = useParams();
      const { data, isLoading, isError } = useGetColorByIdQuery(id);
      console.log(isError);
@@ -68,4 +68,4 @@ const ColorDetails = () => {
      );
 };
 
-export default ColorDetails;
+export default SizeDetails;

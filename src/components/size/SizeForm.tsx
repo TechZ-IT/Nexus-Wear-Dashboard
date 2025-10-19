@@ -17,7 +17,7 @@ import Image from "next/image";
 import { useCreateColorMutation, useGetColorByIdQuery, useUpdateColorDetailsMutation } from "@/redux/api/colorApi/colorApi";
 import { Color } from "@/types/color";
 
-const ColorForm = () => {
+const SizeForm = () => {
      /* ---------------------- State & Hooks ---------------------- */
      const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -234,4 +234,4 @@ const ColorForm = () => {
      );
 };
 
-export default ColorForm;
+export default SizeForm;

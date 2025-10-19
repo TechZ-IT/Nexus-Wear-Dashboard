@@ -33,7 +33,7 @@ import { Color } from "@/types/color"
 import { useDeleteColorMutation, useGetAllColorsQuery } from "@/redux/api/colorApi/colorApi"
 
 
-export default function ColorTable() {
+export default function SizeTable() {
      // State
      const [currentPage, setCurrentPage] = useState(1)
      const [itemsPerPage, setItemsPerPage] = useState(10)

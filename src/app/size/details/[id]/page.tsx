@@ -1,11 +1,11 @@
 
-import ColorDetails from '@/components/color/ColorDetails';
+import SizeDetails from '@/components/size/SizeDetails';
 import React from 'react';
 
 const Page = () => {
      return (
           <div>
-               <ColorDetails  />
+               <SizeDetails  />
           </div>
      );
 };
