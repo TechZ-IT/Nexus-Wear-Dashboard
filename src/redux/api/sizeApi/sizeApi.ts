@@ -12,14 +12,15 @@ export const sizeApi = apiSlice.injectEndpoints({
           }),
 
           getSizeById: builder.query({
-               query: (sizeId) => `/size/${sizeId}`
+               query: (sizeId) => `/size/${sizeId}`,
           }),
 
           deleteSize: builder.mutation({
                query: (sizeId) => ({
                     url: `/size/${sizeId}`,
                     method: "DELETE",
-               })
+               }),
+               invalidatesTags: ["Size"],
           }),
 
           createSize: builder.mutation({
