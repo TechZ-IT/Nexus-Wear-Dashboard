@@ -66,7 +66,7 @@ const SizeForm = () => {
                     const result = await createSize(formData).unwrap();
                     toast.success(`size created successfully`);
                } else {
-                    const result = await updateSizeDetails({ formData, colorId: id }).unwrap();
+                    const result = await updateSizeDetails({ formData, sizeId: id }).unwrap();
                     console.log(result);
                     toast.success(`size updated successfully`);
                }

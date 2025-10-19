@@ -27,10 +27,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 // Icons
 import { Pencil, Trash, Eye } from "lucide-react"
 // Types
-import { Color } from "@/types/color"
+import { Color } from "@/types/size"
 
 // Redux
-import { useDeleteColorMutation, useGetAllColorsQuery } from "@/redux/api/colorApi/colorApi"
+import { useDeleteSizeMutation, useGetAllsizesQuery } from "@/redux/api/sizeApi/sizeApi"
 
 
 export default function SizeTable() {
@@ -55,7 +55,7 @@ export default function SizeTable() {
      const router = useRouter()
 
      // API calls
-     const { data, isLoading } = useGetAllColorsQuery({
+     const { data, isLoading } = useGetAllsizesQuery({
           page: currentPage,
           limit: itemsPerPage,
           search: debouncedSearch,
@@ -64,23 +64,23 @@ export default function SizeTable() {
 
 
 
-     const [deleteColor, { isLoading: isDeleting }] = useDeleteColorMutation()
+     const [deleteSize, { isLoading: isDeleting }] = useDeleteSizeMutation()
 
 
 
      // Data
-     const colors: Color[] = data?.data || []
+     const sizes: Color[] = data?.data || []
      const total = data?.total || 0
      const totalPages = Math.ceil(total / itemsPerPage)
-     // console.log(colors);
+     // console.log(sizes);
 
 
 
      // Handlers
-     const handleDelete = async (colorId: string) => {
-          if (colorId) {
+     const handleDelete = async (sizeId: string) => {
+          if (sizeId) {
                try {
-                    await deleteColor(colorId)
+                    await deleteSize(sizeId)
                } catch (error) {
                     console.error("Delete failed", error)
                }
@@ -95,7 +95,7 @@ export default function SizeTable() {
                {/* Search + Filter + Add */}
                <div className="flex flex-wrap gap-3  items-center justify-between mb-4 w-auto">
                     <Input
-                         placeholder="Search colors..."
+                         placeholder="Search sizes..."
                          value={searchTerm}
                          onChange={(e) => setSearchTerm(e.target.value)}
                          className="w-full md:max-w-sm"
@@ -130,7 +130,7 @@ export default function SizeTable() {
                               </SelectContent>
                          </Select>
 
-                         <Button onClick={() => router.push("/color/create")}>
+                         <Button onClick={() => router.push("/size/create")}>
                               Add Color
                          </Button>
                     </div>
@@ -142,7 +142,7 @@ export default function SizeTable() {
                          <TableHeader>
                               <TableRow>
                                    <TableHead className="font-extrabold text-center">*</TableHead>
-                                   <TableHead className="font-extrabold ">Image</TableHead>
+                                   {/* <TableHead className="font-extrabold ">Image</TableHead> */}
                                    <TableHead className="font-extrabold text-center">Name</TableHead>
                                    <TableHead className="font-extrabold text-center">Description</TableHead>
                                    <TableHead className="font-extrabold text-center">CreatedAt</TableHead>
@@ -157,16 +157,16 @@ export default function SizeTable() {
                                              Loading...
                                         </TableCell>
                                    </TableRow>
-                              ) : colors.length ? (
-                                   colors.map((color, idx) => (
-                                        <TableRow key={color.id}>
+                              ) : sizes.length ? (
+                                   sizes.map((size, idx) => (
+                                        <TableRow key={size.id}>
                                              <TableCell>
                                                   {(currentPage - 1) * itemsPerPage + idx + 1}
                                              </TableCell>
 
-                                             <TableCell>
+                                             {/* <TableCell>
                                                   <Image
-                                                       src={color.image ?? "/profileImg.jpg"}
+                                                       src={size.image ?? "/profileImg.jpg"}
                                                        alt="images"
                                                        width={50}
                                                        height={50}
@@ -174,11 +174,11 @@ export default function SizeTable() {
                                                        className="h-12 w-12 object-contain"
                                                        draggable={false}
                                                   />
-                                             </TableCell>
+                                             </TableCell> */}
 
-                                             <TableCell>{color.name}</TableCell>
-                                             <TableCell>{color.description.slice(0, 20) + "...."}</TableCell>
-                                             <TableCell>{color.createdAt.slice(0, 10)}</TableCell>
+                                             <TableCell>{size.name}</TableCell>
+                                             <TableCell>{size.description.slice(0, 20) + "...."}</TableCell>
+                                             <TableCell>{size.createdAt.slice(0, 10)}</TableCell>
 
                                              
 
@@ -186,7 +186,7 @@ export default function SizeTable() {
                                              <TableCell>
                                                   {/* Edit */}
                                                   <Button
-                                                       onClick={() => router.push(`/color/update/${color.id}`)}
+                                                       onClick={() => router.push(`/size/update/${size.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -195,7 +195,7 @@ export default function SizeTable() {
 
                                                   {/* Details */}
                                                   <Button
-                                                       onClick={() => router.push(`/color/details/${color.id}`)}
+                                                       onClick={() => router.push(`/size/details/${size.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -226,7 +226,7 @@ export default function SizeTable() {
                                                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
                                                                  <AlertDialogAction
                                                                       disabled={isDeleting}
-                                                                      onClick={() => handleDelete(color?.id)}
+                                                                      onClick={() => handleDelete(size?.id)}
                                                                       className="bg-red-600 font-extrabold"
                                                                  >
                                                                       Continue
