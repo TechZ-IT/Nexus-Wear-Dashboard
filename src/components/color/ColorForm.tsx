@@ -12,17 +12,10 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 // Redux API
-import { useGetAllRolesQuery } from "@/redux/api/roleApi/roleApi";
-import {
-     useCreateAdminMutation,
-     useGetAdminByIdQuery,
-     useUpdateAdminDetailsMutation,
-} from "@/redux/api/adminApi/adminApi";
 
-// Types
-import { Role } from "@/types/role";
-import { Admin } from "@/types/admin";
 import Image from "next/image";
+import { useCreateColorMutation, useGetColorByIdQuery, useUpdateColorDetailsMutation } from "@/redux/api/colorApi/colorApi";
+import { Color } from "@/types/color";
 
 const ColorForm = () => {
      /* ---------------------- State & Hooks ---------------------- */
@@ -34,13 +27,12 @@ const ColorForm = () => {
      const formattedText = pathname.split("/")[2];
 
      /* ---------------------- API Calls ---------------------- */
-     const { data: roleData } = useGetAllRolesQuery(undefined);
-     const { data: admin } = useGetAdminByIdQuery(id);
-     const [createAdmin] = useCreateAdminMutation();
-     const [updateAdminDetails] = useUpdateAdminDetailsMutation();
+     const { data: color } = useGetColorByIdQuery(id);
+     const [createColor] = useCreateColorMutation();
+     const [updateColorDetails] = useUpdateColorDetailsMutation();
 
-     const roles: Role[] = roleData || [];
-     const adminInfo: Admin | undefined = admin;
+     const colorInfo: Color | undefined = color;
+
 
      /* ---------------------- Form Setup ---------------------- */
      const {
@@ -48,42 +40,29 @@ const ColorForm = () => {
           register,
           formState: { errors },
           reset,
-     } = useForm<Admin>();
+     } = useForm<Color>();
 
      
      useEffect(() => {
-          if (adminInfo && formattedText === "update") {
+          if (colorInfo && formattedText === "update") {
                reset({
-                    name: adminInfo.name || "",
-                    email: adminInfo.email || "",
-                    phone: adminInfo.phone || "",
-                    nationalId: adminInfo.nationalId || "",
-                    addressLine: adminInfo.addressLine || "",
-                    status: adminInfo.status || "active",
-                    roleId: adminInfo.roleId || "",
-                    password: "", // keep empty for update
+                    name: colorInfo.name || "",
+                    description: colorInfo.description || "",
                });
           }
-     }, [adminInfo, reset, formattedText]);
+     }, [colorInfo, reset, formattedText]);
 
 
 
      /* ---------------------- Submit Handler ---------------------- */
-     const onSubmit: SubmitHandler<Admin> = async (data) => {
+     const onSubmit: SubmitHandler<Color> = async (data) => {
           const formData = new FormData();
 
           formData.append("name", data.name);
-          formData.append("email", data.email);
-          formData.append("phone", data.phone);
-          formData.append("nationalId", data.nationalId);
-          formData.append("addressLine", data.addressLine);
-          formData.append("roleId", String(data.roleId));
-          formData.append("status", data.status);
+          formData.append("description", data.description);
 
           // Only include password if creating OR if user typed a new one
-          if (formattedText === "create" || data.password) {
-               formData.append("password", data.password);
-          }
+
 
           if (data.image && data.image[0]) {
                formData.append("image", data.image[0]);
@@ -91,17 +70,17 @@ const ColorForm = () => {
 
           try {
                if (formattedText === "create") {
-                    const result = await createAdmin(formData).unwrap();
-                    toast.success(`${result.data.role.name} created successfully`);
+                    const result = await createColor(formData).unwrap();
+                    toast.success(`color created successfully`);
                } else {
-                    const result = await updateAdminDetails({ formData, adminId: id }).unwrap();
+                    const result = await updateColorDetails({ formData, colorId: id }).unwrap();
                     console.log(result);
-                    toast.success(`${result.data.role.name} updated successfully`);
+                    toast.success(`color updated successfully`);
                }
-               router.push("/admin");
+               router.push("/color");
           } catch (err) {
-               console.error("Failed to save admin:", err);
-               toast.error("Failed to save admin");
+               console.error("Failed to save color:", err);
+               toast.error("Failed to save color");
           }
      };
 
@@ -109,7 +88,7 @@ const ColorForm = () => {
      return (
           <Card className="p-4 rounded-sm gap-4 shadow-none">
                <h1 className="text-xl font-semibold">
-                    {formattedText === "update" ? "Update Admin Info" : "Create Admin"}
+                    {formattedText === "update" ? "Update Color Info" : "Create Color"}
                </h1>
 
                <form
@@ -120,10 +99,10 @@ const ColorForm = () => {
                     <Card className="md:col-span-2 p-4 gap-2 rounded-sm shadow-none">
                          {/* Name */}
                          <div>
-                              <label className="block text-sm font-medium mb-1">Name</label>
+                              <label className="block text-sm font-medium mb-1">Color Name</label>
                               <Input
                                    type="text"
-                                   placeholder="Enter Admin Name"
+                                   placeholder="Enter Color Name"
                                    {...register("name", { required: "Name is required" })}
                                    className="h-12 w-full border border-gray-300 rounded-md"
                               />
@@ -134,127 +113,23 @@ const ColorForm = () => {
                               )}
                          </div>
 
-                         {/* Email */}
+                         {/* description */}
                          <div>
-                              <label className="block text-sm font-medium mb-1">Email</label>
-                              <Input
-                                   type="email"
-                                   placeholder="Enter Admin Email"
-                                   {...register("email", { required: "Email is required" })}
-                                   className="h-12 w-full border border-gray-300 rounded-md"
-                              />
-                              {errors.email && (
-                                   <p className="text-red-500 text-sm mt-1">
-                                        {errors.email.message}
-                                   </p>
-                              )}
-                         </div>
-
-                         {/* Phone */}
-                         <div>
-                              <label className="block text-sm font-medium mb-1">Phone</label>
-                              <Input
-                                   type="tel"
-                                   placeholder="Enter Phone Number"
-                                   {...register("phone", { required: "Phone is required" })}
-                                   className="h-12 w-full border border-gray-300 rounded-md"
-                              />
-                              {errors.phone && (
-                                   <p className="text-red-500 text-sm mt-1">
-                                        {errors.phone.message}
-                                   </p>
-                              )}
-                         </div>
-
-                         {/* National ID */}
-                         <div>
-                              <label className="block text-sm font-medium mb-1">
-                                   National Id
-                              </label>
+                              <label className="block text-sm font-medium mb-1">Color Description</label>
                               <Input
                                    type="text"
-                                   placeholder="Enter National Id"
-                                   {...register("nationalId", { required: "National ID is required" })}
+                                   placeholder="Enter Color Description"
+                                   {...register("description", { required: "description is required" })}
                                    className="h-12 w-full border border-gray-300 rounded-md"
                               />
-                              {errors.nationalId && (
+                              {errors.description && (
                                    <p className="text-red-500 text-sm mt-1">
-                                        {errors.nationalId.message}
+                                        {errors.description.message}
                                    </p>
                               )}
                          </div>
 
-                         {/* Address */}
-                         <div>
-                              <label className="block text-sm font-medium mb-1">Address</label>
-                              <Input
-                                   type="text"
-                                   placeholder="Enter Address"
-                                   {...register("addressLine", { required: "Address is required" })}
-                                   className="h-12 w-full border border-gray-300 rounded-md"
-                              />
-                              {errors.addressLine && (
-                                   <p className="text-red-500 text-sm mt-1">
-                                        {errors.addressLine.message}
-                                   </p>
-                              )}
-                         </div>
 
-                         {/* Password */}
-                         <div>
-                              <label className="block text-sm font-medium mb-1">Password</label>
-                              <Input
-                                   type="password"
-                                   placeholder="(optional) if already have"
-                                   {...register("password")}
-                                   className="h-12 w-full border border-gray-300 rounded-md"
-                              />
-                         </div>
-
-                         {/* Role */}
-                         <div className="space-y-2">
-                              <Label htmlFor="role">Role</Label>
-                              <select
-                                   id="role"
-                                   defaultValue=""
-                                   {...register("roleId", { required: "Role is required" })}
-                                   className="h-12 w-full border border-gray-300 rounded-md px-2 appearance-none"
-                              >
-                                   <option value="" disabled>
-                                        Select role
-                                   </option>
-                                   {roles.map((item) => (
-                                        <option key={item.id} value={item.id}>
-                                             {item.name}
-                                        </option>
-                                   ))}
-                              </select>
-                              {errors.roleId && (
-                                   <p className="text-red-500 text-sm">{errors.roleId.message}</p>
-                              )}
-                         </div>
-
-                         {/* Status */}
-                         <div className="space-y-2">
-                              <Label htmlFor="status">Status</Label>
-                              <select
-                                   id="status"
-                                   defaultValue=""
-                                   {...register("status", { required: "Status is required" })}
-                                   className="h-12 w-full border border-gray-300 rounded-md px-2 appearance-none"
-                              >
-                                   <option value="" disabled>
-                                        Select status
-                                   </option>
-                                   <option value="active">Active</option>
-                                   <option value="pending">Pending</option>
-                                   <option value="inactive">Inactive</option>
-                                   <option value="deleted">Deleted</option>
-                              </select>
-                              {errors.status && (
-                                   <p className="text-red-500 text-sm">{errors.status.message}</p>
-                              )}
-                         </div>
                     </Card>
 
                     {/* Right Section - Profile Image */}
@@ -280,10 +155,10 @@ const ColorForm = () => {
                                              ✕
                                         </button>
                                    </div>
-                              ) : adminInfo?.image ? (
+                              ) : colorInfo?.image ? (
                                    <div className="relative w-32 h-32">
                                         <Image
-                                             src={adminInfo.image}
+                                             src={colorInfo.image}
                                              alt="Profile Preview"
                                              width={500}
                                              height={100}

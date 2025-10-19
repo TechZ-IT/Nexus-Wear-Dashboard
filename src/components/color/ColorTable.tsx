@@ -131,7 +131,7 @@ export default function ColorTable() {
                          </Select>
 
                          <Button onClick={() => router.push("/color/create")}>
-                              Add Admin
+                              Add Color
                          </Button>
                     </div>
                </div>
