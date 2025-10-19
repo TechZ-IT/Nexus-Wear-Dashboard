@@ -1,12 +1,11 @@
 
-
-import AdminDetails from '@/components/admin/AdminDetails';
+import ColorDetails from '@/components/color/ColorDetails';
 import React from 'react';
 
 const Page = () => {
      return (
           <div>
-               <AdminDetails  />
+               <ColorDetails  />
           </div>
      );
 };

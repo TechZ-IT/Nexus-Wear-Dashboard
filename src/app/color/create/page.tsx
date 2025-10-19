@@ -1,10 +1,11 @@
-import AdminForm from '@/components/admin/AdminForm';
+
+import ColorForm from '@/components/color/ColorForm';
 import React from 'react';
 
 const Page = () => {
      return (
           <div>
-               <AdminForm />
+               <ColorForm />
           </div>
      );
 };

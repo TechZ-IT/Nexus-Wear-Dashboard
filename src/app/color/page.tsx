@@ -1,9 +1,10 @@
-import AdminTable from '@/components/admin/AdminTable';
+
+import ColorTable from '@/components/color/ColorTable';
 import React from 'react';
 
 const page = () => {
        return <>
-              <AdminTable />
+              <ColorTable />
        </>
 
 
