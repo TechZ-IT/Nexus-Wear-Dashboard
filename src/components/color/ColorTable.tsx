@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 
-// Redux
+
 
 // UI Components
 import { Button } from "@/components/ui/button"
@@ -22,21 +22,18 @@ import {
      AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
-
-
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 
 // Icons
 import { Pencil, Trash, Eye } from "lucide-react"
+// Types
+import { Color } from "@/types/color"
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { useDeleteSubCategoryMutation, useGetAllSubCategoriesQuery } from "@/redux/api/subCategoryApi/subCategoryApi"
-import { Subcategory } from "@/types/categoryAndSubcategory"
-import toast from "react-hot-toast"
-
-
+// Redux
+import { useDeleteColorMutation, useGetAllColorsQuery } from "@/redux/api/colorApi/colorApi"
 
 
-export default function SubCategoryTable() {
+export default function ColorTable() {
      // State
      const [currentPage, setCurrentPage] = useState(1)
      const [itemsPerPage, setItemsPerPage] = useState(10)
@@ -58,49 +55,47 @@ export default function SubCategoryTable() {
      const router = useRouter()
 
      // API calls
-     const { data, isLoading } = useGetAllSubCategoriesQuery({
+     const { data, isLoading } = useGetAllColorsQuery({
           page: currentPage,
           limit: itemsPerPage,
           search: debouncedSearch,
           status: statusFilter === "all" ? undefined : statusFilter,
      })
 
-     const [deleteSubCategory, { isLoading: isDeleting }] = useDeleteSubCategoryMutation()
+
+
+     const [deleteColor, { isLoading: isDeleting }] = useDeleteColorMutation()
 
 
 
      // Data
-     const subCategories: Subcategory[] = data?.data || []
+     const colors: Color[] = data?.data || []
      const total = data?.total || 0
      const totalPages = Math.ceil(total / itemsPerPage)
-     console.log(subCategories);
-
-
+     // console.log(colors);
 
 
 
      // Handlers
-     const handleDelete = async (subCategoryId: string) => {
-          // console.log(subCategoryId);
-          if (subCategoryId) {
+     const handleDelete = async (colorId: string) => {
+          if (colorId) {
                try {
-                    await deleteSubCategory(subCategoryId)
+                    await deleteColor(colorId)
                } catch (error) {
                     console.error("Delete failed", error)
-                    toast.error("delete failed")
                }
           }
      }
 
 
 
-     
+
      return (
           <div className="w-full pb-6">
                {/* Search + Filter + Add */}
                <div className="flex flex-wrap gap-3  items-center justify-between mb-4 w-auto">
                     <Input
-                         placeholder="Search subCategories..."
+                         placeholder="Search colors..."
                          value={searchTerm}
                          onChange={(e) => setSearchTerm(e.target.value)}
                          className="w-full md:max-w-sm"
@@ -123,7 +118,7 @@ export default function SubCategoryTable() {
                          </Select>
 
                          <Select value={statusFilter} onValueChange={setStatusFilter}>
-                              <SelectTrigger>
+                              <SelectTrigger className="">
                                    <SelectValue placeholder="Select status" />
                               </SelectTrigger>
                               <SelectContent>
@@ -135,24 +130,22 @@ export default function SubCategoryTable() {
                               </SelectContent>
                          </Select>
 
-                         <Button onClick={() => router.push("/subCategories/create")}>
-                              Add subCategory
+                         <Button onClick={() => router.push("/color/create")}>
+                              Add Admin
                          </Button>
                     </div>
                </div>
-
 
                {/* Table */}
                <div className="overflow-hidden rounded-md border text-center">
                     <Table>
                          <TableHeader>
                               <TableRow>
-                                   <TableHead className="font-extrabold text-center">#</TableHead>
+                                   <TableHead className="font-extrabold text-center">*</TableHead>
                                    <TableHead className="font-extrabold ">Image</TableHead>
-                                   <TableHead className="font-extrabold text-center">Sub Category Name</TableHead>
+                                   <TableHead className="font-extrabold text-center">Name</TableHead>
                                    <TableHead className="font-extrabold text-center">Description</TableHead>
-                                   <TableHead className="font-extrabold text-center">Category Name</TableHead>
-                                   <TableHead className="font-extrabold text-center">Created At</TableHead>
+                                   <TableHead className="font-extrabold text-center">CreatedAt</TableHead>
                                    <TableHead className="font-extrabold text-center">Actions</TableHead>
                               </TableRow>
                          </TableHeader>
@@ -164,16 +157,16 @@ export default function SubCategoryTable() {
                                              Loading...
                                         </TableCell>
                                    </TableRow>
-                              ) : subCategories.length ? (
-                                   subCategories.map((subCategory, idx) => (
-                                        <TableRow key={subCategory.id}>
+                              ) : colors.length ? (
+                                   colors.map((color, idx) => (
+                                        <TableRow key={color.id}>
                                              <TableCell>
                                                   {(currentPage - 1) * itemsPerPage + idx + 1}
                                              </TableCell>
 
                                              <TableCell>
                                                   <Image
-                                                       src={subCategory?.image ?? "/profileImg.jpg"}
+                                                       src={color.image ?? "/profileImg.jpg"}
                                                        alt="images"
                                                        width={50}
                                                        height={50}
@@ -183,16 +176,17 @@ export default function SubCategoryTable() {
                                                   />
                                              </TableCell>
 
-                                             <TableCell>{subCategory.name}</TableCell>
-                                             <TableCell>{subCategory.description.slice(0, 20) + "....."}</TableCell>
-                                             <TableCell>{subCategory.category.name}</TableCell>
-                                             <TableCell>{subCategory.createdAt.slice(0, 10)}</TableCell>
+                                             <TableCell>{color.name}</TableCell>
+                                             <TableCell>{color.description.slice(0, 20) + "...."}</TableCell>
+                                             <TableCell>{color.createdAt.slice(0, 10)}</TableCell>
+
+                                             
 
                                              {/* Actions */}
                                              <TableCell>
                                                   {/* Edit */}
                                                   <Button
-                                                       onClick={() => router.push(`/subCategories/update/${subCategory.id}`)}
+                                                       onClick={() => router.push(`/color/update/${color.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -201,7 +195,7 @@ export default function SubCategoryTable() {
 
                                                   {/* Details */}
                                                   <Button
-                                                       onClick={() => router.push(`/subCategories/details/${subCategory.id}`)}
+                                                       onClick={() => router.push(`/color/details/${color.id}`)}
                                                        variant="ghost"
                                                        className="h-8 w-8 p-0"
                                                   >
@@ -232,7 +226,7 @@ export default function SubCategoryTable() {
                                                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
                                                                  <AlertDialogAction
                                                                       disabled={isDeleting}
-                                                                      onClick={() => handleDelete(subCategory?.id)}
+                                                                      onClick={() => handleDelete(color?.id)}
                                                                       className="bg-red-600 font-extrabold"
                                                                  >
                                                                       Continue
