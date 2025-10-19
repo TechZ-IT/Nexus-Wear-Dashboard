@@ -45,4 +45,4 @@ export const sizeApi = apiSlice.injectEndpoints({
 
 
 
-export const { useGetAllsizesQuery,useGetSizeByIdQuery,useDeleteSizeMutation,useCreateSizeMutation,useUpdateSizeDetailsMutation } = sizeApi;
+export const { useGetAllsizesQuery, useGetSizeByIdQuery, useDeleteSizeMutation, useCreateSizeMutation, useUpdateSizeDetailsMutation } = sizeApi;

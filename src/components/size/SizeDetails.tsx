@@ -4,29 +4,27 @@ import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '../ui/card';
-import Image from 'next/image';
-import { useGetColorByIdQuery } from '@/redux/api/colorApi/colorApi';
+import { useGetSizeByIdQuery } from '@/redux/api/sizeApi/sizeApi';
 
 const SizeDetails = () => {
      const { id } = useParams();
-     const { data, isLoading, isError } = useGetColorByIdQuery(id);
+     const { data, isLoading, isError } = useGetSizeByIdQuery(id);
      console.log(isError);
      const router = useRouter();
 
      if (isLoading) return <p className="text-center py-10">Loading...</p>;
-     if (isError) return <p className="text-center py-10 text-red-500">Failed to load admin details.</p>;
-     if (!data) return <p className="text-center py-10">No admin found</p>;
+     if (isError) return <p className="text-center py-10 text-red-500">Failed to load size details.</p>;
+     if (!data) return <p className="text-center py-10">No Size found</p>;
 
      const {
           name,
           description,
-          image,
           createdAt,
           updatedAt,
      } = data;
 
      const tableData = [
-          { label: "Color Name", value: name },
+          { label: "Size ", value: name },
           { label: "Description", value: description.slice(0, 100) + " ...." },
           { label: "Created At", value: new Date(createdAt).toLocaleString() },
           { label: "Updated At", value: new Date(updatedAt).toLocaleString() },
@@ -34,21 +32,10 @@ const SizeDetails = () => {
 
      return (
           <Card className="w-full  p-4 sm:p-6 bg-white rounded-lg shadow">
-               {/* Top Section */}
-               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center mb-4">
-                    <Image
-                         src={image ?? "/profileImg.jpg"}
-                         alt={name}
-                         width={100}
-                         height={100}
-                         quality={75}
-                         className="w-32 h-32 sm:w-42 sm:h-42 rounded-full border border-gray-300 object-cover"
-                    />
-               </div>
 
                {/* Table Section */}
                <div className="overflow-x-auto  rounded ">
-                    <h1 className="text-xl sm:text-2xl font-extrabold mb-2 ">Color Details:</h1>
+                    <h1 className="text-xl sm:text-2xl font-extrabold mb-2 ">Size Details:</h1>
                     <table className="w-full  border-collapse border border-gray-300 text-sm sm:text-base">
                          <tbody>
                               {tableData.map((item, idx) => (
