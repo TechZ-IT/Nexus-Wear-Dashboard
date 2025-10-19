@@ -13,13 +13,11 @@ import { Label } from "../ui/label";
 
 // Redux API
 
-import Image from "next/image";
-import { useCreateColorMutation, useGetColorByIdQuery, useUpdateColorDetailsMutation } from "@/redux/api/colorApi/colorApi";
-import { Color } from "@/types/color";
+import { Size} from "@/types/size";
+import { useCreateSizeMutation, useGetSizeByIdQuery, useUpdateSizeDetailsMutation } from "@/redux/api/sizeApi/sizeApi";
 
 const SizeForm = () => {
      /* ---------------------- State & Hooks ---------------------- */
-     const [imagePreview, setImagePreview] = useState<string | null>(null);
 
      const { id } = useParams();
      const router = useRouter();
@@ -27,11 +25,11 @@ const SizeForm = () => {
      const formattedText = pathname.split("/")[2];
 
      /* ---------------------- API Calls ---------------------- */
-     const { data: color } = useGetColorByIdQuery(id);
-     const [createColor] = useCreateColorMutation();
-     const [updateColorDetails] = useUpdateColorDetailsMutation();
+     const { data: size } = useGetSizeByIdQuery(id);
+     const [createSize] = useCreateSizeMutation();
+     const [updateSizeDetails] = useUpdateSizeDetailsMutation();
 
-     const colorInfo: Color | undefined = color;
+     const sizeInfo: Size | undefined = size;
 
 
      /* ---------------------- Form Setup ---------------------- */
@@ -40,47 +38,42 @@ const SizeForm = () => {
           register,
           formState: { errors },
           reset,
-     } = useForm<Color>();
+     } = useForm<Size>();
 
      
      useEffect(() => {
-          if (colorInfo && formattedText === "update") {
+          if (sizeInfo && formattedText === "update") {
                reset({
-                    name: colorInfo.name || "",
-                    description: colorInfo.description || "",
+                    name: sizeInfo.name || "",
+                    description: sizeInfo.description || "",
                });
           }
-     }, [colorInfo, reset, formattedText]);
+     }, [sizeInfo, reset, formattedText]);
 
 
 
      /* ---------------------- Submit Handler ---------------------- */
-     const onSubmit: SubmitHandler<Color> = async (data) => {
+     const onSubmit: SubmitHandler<Size> = async (data) => {
           const formData = new FormData();
 
           formData.append("name", data.name);
           formData.append("description", data.description);
 
-          // Only include password if creating OR if user typed a new one
 
-
-          if (data.image && data.image[0]) {
-               formData.append("image", data.image[0]);
-          }
 
           try {
                if (formattedText === "create") {
-                    const result = await createColor(formData).unwrap();
-                    toast.success(`color created successfully`);
+                    const result = await createSize(formData).unwrap();
+                    toast.success(`size created successfully`);
                } else {
-                    const result = await updateColorDetails({ formData, colorId: id }).unwrap();
+                    const result = await updateSizeDetails({ formData, colorId: id }).unwrap();
                     console.log(result);
-                    toast.success(`color updated successfully`);
+                    toast.success(`size updated successfully`);
                }
-               router.push("/color");
+               router.push("/size");
           } catch (err) {
-               console.error("Failed to save color:", err);
-               toast.error("Failed to save color");
+               console.error("Failed to save size:", err);
+               toast.error("Failed to save size");
           }
      };
 
@@ -88,7 +81,7 @@ const SizeForm = () => {
      return (
           <Card className="p-4 rounded-sm gap-4 shadow-none">
                <h1 className="text-xl font-semibold">
-                    {formattedText === "update" ? "Update Color Info" : "Create Color"}
+                    {formattedText === "update" ? "Update size Info" : "Create size"}
                </h1>
 
                <form
@@ -96,13 +89,13 @@ const SizeForm = () => {
                     className="bg-white grid grid-cols-1 md:grid-cols-3 gap-4"
                >
                     {/* Left Section - Form Inputs */}
-                    <Card className="md:col-span-2 p-4 gap-2 rounded-sm shadow-none">
+                    <Card className="md:col-span-3 p-4 gap-2 rounded-sm shadow-none">
                          {/* Name */}
                          <div>
-                              <label className="block text-sm font-medium mb-1">Color Name</label>
+                              <label className="block text-sm font-medium mb-1">size Name</label>
                               <Input
                                    type="text"
-                                   placeholder="Enter Color Name"
+                                   placeholder="Enter size Name"
                                    {...register("name", { required: "Name is required" })}
                                    className="h-12 w-full border border-gray-300 rounded-md"
                               />
@@ -115,10 +108,10 @@ const SizeForm = () => {
 
                          {/* description */}
                          <div>
-                              <label className="block text-sm font-medium mb-1">Color Description</label>
+                              <label className="block text-sm font-medium mb-1">size Description</label>
                               <Input
                                    type="text"
-                                   placeholder="Enter Color Description"
+                                   placeholder="Enter size Description"
                                    {...register("description", { required: "description is required" })}
                                    className="h-12 w-full border border-gray-300 rounded-md"
                               />
@@ -132,89 +125,6 @@ const SizeForm = () => {
 
                     </Card>
 
-                    {/* Right Section - Profile Image */}
-                    <div className="flex flex-col items-center justify-center border border-gray-200 rounded-sm p-4 relative">
-                         <div className="flex flex-col items-center">
-                              {/* Image Preview */}
-                              {imagePreview ? (
-                                   <div className="relative w-32 h-32">
-                                        <Image
-                                             src={imagePreview}
-                                             alt="Profile Preview"
-                                             width={500}
-                                             height={100}
-                                             quality={75}
-                                             className="w-full h-full object-cover rounded-full mb-4 border border-gray-300"
-                                             draggable={false}
-                                        />
-                                        <button
-                                             type="button"
-                                             onClick={() => setImagePreview(null)}
-                                             className="absolute top-1 right-1 bg-red-600 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full shadow-md hover:bg-red-700"
-                                        >
-                                             ✕
-                                        </button>
-                                   </div>
-                              ) : colorInfo?.image ? (
-                                   <div className="relative w-32 h-32">
-                                        <Image
-                                             src={colorInfo.image}
-                                             alt="Profile Preview"
-                                             width={500}
-                                             height={100}
-                                             quality={75}
-                                             className="w-full h-full object-cover rounded-full mb-4 border border-gray-300"
-                                             draggable={false}
-                                        />
-                                   </div>
-                              ) : (
-                                   <div className="w-32 h-32 flex items-center justify-center bg-gray-100 rounded-full mb-4 border border-gray-300">
-                                        <span className="text-gray-400">No Image</span>
-                                   </div>
-                              )}
-                         </div>
-
-                         {/* Upload Input */}
-                         <div className="w-full">
-                              <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 transition">
-                                   <div className="flex flex-col items-center justify-center">
-                                        <p className="text-sm text-gray-500">
-                                             <span className="font-semibold">Click to upload</span> or drag
-                                             & drop
-                                        </p>
-                                        <p className="text-xs text-gray-400">PNG, JPG (max 2MB)</p>
-                                   </div>
-                                   <Input
-                                        type="file"
-                                        accept="image/*"
-                                        {...register("image", {
-                                             validate: {
-                                                  lessThan2MB: (value) => {
-                                                       const files = value as unknown as FileList;
-                                                       return (
-                                                            !files?.[0] ||
-                                                            files[0].size <= 2_000_000 ||
-                                                            "File size should be less than 2MB"
-                                                       );
-                                                  },
-                                             },
-                                             onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                                                  const file = e.target.files?.[0];
-                                                  if (file) {
-                                                       setImagePreview(URL.createObjectURL(file));
-                                                  }
-                                             },
-                                        })}
-                                        className="h-12 hidden"
-                                   />
-                                   {errors.image && (
-                                        <p className="text-red-500 text-sm mt-1">
-                                             {errors.image.message}
-                                        </p>
-                                   )}
-                              </label>
-                         </div>
-                    </div>
 
                     {/* Action Buttons */}
                     <div className="md:col-span-3 flex justify-end gap-2">
